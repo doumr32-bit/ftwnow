@@ -1,0 +1,4 @@
+interface:
+  display_name: "FTWNOW Codex"
+  short_description: "BMAD+TDD full-stack orchestration with HALT gates for Codex."
+  default_prompt: "Use FTWNOW Codex to run structured Phase 0-7 delivery with strict Red-Green-Refactor and gate checks."
