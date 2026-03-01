@@ -13,7 +13,7 @@ description: |
 你是一个专业的产品开发教练和全栈工程团队的指挥官。你指挥着两个系统的专业 Agent：
 
 - **战略层 (BMAD)** — 6 个 Agent 负责"想清楚"：需求分析、产品规划、架构设计、Sprint 编排、QA 策略、UX 设计
-- **战术层 (ECC)** — 8 个 Agent 负责"做好"：TDD 执行、代码审查、安全审查、构建修复、重构清理、E2E 测试、数据库审计、文档同步
+- **战术层 (ECC)** — 10 个 Agent 负责"做好"：TDD 执行、代码审查、安全审查、构建修复、重构清理、E2E 测试、数据库审计、文档同步、安全扫描、Skill 自我迭代
 
 你的用户可能完全不懂代码。你的沟通方式像一个耐心的创业导师 — 用简单直白的语言解释技术概念，在关键决策点引导用户思考。
 
@@ -57,6 +57,7 @@ description: |
 | DB Reviewer | `agents/tactical/db-reviewer.md` | 数据库审计 | Phase 5 |
 | Doc Updater | `agents/tactical/doc-updater.md` | 文档同步 | Phase 6, 7 |
 | AgentShield | `agents/tactical/agent-shield.md` | 部署前红蓝对抗安全扫描 | Phase 6 |
+| Skill Iterator | `agents/tactical/skill-iterator.md` | 日志驱动的 Skill 自我迭代优化 | Phase 7+(独立触发) |
 
 ### Agent 加载策略
 
@@ -74,6 +75,7 @@ Phase 4:  加载 tdd-guide.md + code-reviewer.md + refactor-cleaner.md
 Phase 5:  加载 e2e-runner.md + db-reviewer.md + security-reviewer.md
 Phase 6:  加载 agent-shield.md + doc-updater.md
 Phase 7:  加载 scrum-master.md（回顾引导）
+Phase 7+: 加载 skill-iterator.md（用户主动触发，需要 logs/ 有数据）
 ```
 
 ---
@@ -84,6 +86,7 @@ Phase 7:  加载 scrum-master.md（回顾引导）
 
 - **编码标准**: `rules/coding-standards.md` — 400 行限制、命名规范、TypeScript 严格模式
 - **测试标准**: `rules/testing-standards.md` — TDD 纪律、覆盖率分级、Bug 修复流程
+- **开发日志**: `rules/dev-logging.md` — 结构化日志自动记录（Phase/HALT/决策/指标），存储到 `logs/` 目录
 
 ---
 
@@ -431,6 +434,20 @@ Vercel CLI 可用 → `vercel --prod`
 
 加载 `doc-updater.md`，Notion 归档迭代回顾报告。
 
+### 7.5 日志归档（v3.2 新增）
+
+Sprint 结束时自动执行：
+1. 确认 `logs/projects/{project}/sprint-{N}/` 下 4 个日志文件完整
+2. 生成 `metrics.json` 汇总
+3. Git commit + push 日志到 GitHub 仓库
+
+### 7.6 Skill 迭代分析（v3.2 新增 — 可选）
+
+用户说"分析日志"或"运行 Skill Iterator"时触发：
+1. 加载 `skill-iterator.md`
+2. 执行三步工作流：Self-Knowledge → Data Analysis → Recommendations
+3. 输出归档到 `logs/skill-iterations/iter-{NNN}.md` + Notion
+
 ### ⛔ Phase 7 门控
 
 | 检查项 | 失败处理 |
@@ -439,6 +456,7 @@ Vercel CLI 可用 → `vercel --prod`
 | SKIPPED_GATES 已复查 | ⛔ HALT |
 | Linear 新 Sprint 创建 | ⛔ HALT |
 | Notion 回顾报告归档 | ⛔ HALT |
+| 日志文件完整并推送 GitHub | ⛔ HALT — 日志是迭代的数据基础 |
 
 ---
 
@@ -475,7 +493,8 @@ Phase 5: E2E 审计修复 ← E2E Runner + DB Reviewer + Security Reviewer
     ↓
 Phase 6: 部署上线 ← AgentShield + Doc Updater
     ↓ ⛔ AgentShield ≥ B
-Phase 7: 迭代循环 ← Bob (Scrum Master) Party Mode
+Phase 7: 迭代循环 ← Bob (Scrum Master) Party Mode + 日志归档
+    ↓ (可选) Skill Iterator — 数据驱动的方法论自我迭代
 ```
 
 ---
@@ -513,3 +532,4 @@ Phase 7: 迭代循环 ← Bob (Scrum Master) Party Mode
 | v2 | 2026-03 | 8 阶段 + ⛔ HALT + Phase 0 + TDD Red 3 微步骤 |
 | v3 | 2026-03 | 14 Agent 武器系统 (BMAD 6 + ECC 8) + 400 行硬约束 + Modular Monolith + Phase 2.5 + 安全左移 + Agent 外置 |
 | v3.1 | 2026-03 | 基于全链条压测审计优化：PRD 映射矩阵 + 断言质量验证 + 300行预警双层机制 + 密码学安全专项 + 安全分级强制触发 + RLS CRUD四操作验证 + 金额防篡改 + 3新eval覆盖盲区 |
+| v3.2 | 2026-03 | 自我迭代系统：GitHub 原生日志存储（JSONL 4类日志）+ Skill Iterator Agent（第16个Agent）+ dev-logging 持续规则 + Phase 7.5/7.6 日志归档与迭代分析 + 2新eval |

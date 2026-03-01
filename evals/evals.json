@@ -338,6 +338,109 @@
         }
       ],
       "files": []
+    },
+    {
+      "id": 7,
+      "name": "v3.2-dev-logging-system",
+      "prompt": "我有一个宠物领养平台项目，正在使用 FTWNOW 开发。目前在 Phase 4 TDD 开发中。\n\n场景 1 — Phase 完成日志：Phase 1 刚完成，Mary 用了 25 分钟完成需求分析，3 个门控全部通过，0 次 HALT。请记录 phase-log。\n\n场景 2 — HALT 日志：Phase 4 中 adoption-form.ts 有 423 行被 400 行检查触发 HALT，用户选择 Resolve 拆分文件，耗时 12 分钟。请记录 halt-log。\n\n场景 3 — 决策日志：Phase 2 中用户选择了 Modular Monolith 架构（因为 18 Story + 7 表），用户说'模块化好扩展'。请记录 decision-log。\n\n场景 4 — Sprint 结束：Sprint 1 结束，请生成 metrics.json 汇总。\n\n所有日志应存储在 logs/projects/pet-adoption/sprint-1/ 目录下。",
+      "expected_output": "四种日志类型正确写入 JSONL/JSON 格式，存储在正确的目录下，包含所有必填字段",
+      "assertions": [
+        {
+          "name": "phase_log_jsonl_format",
+          "description": "phase-log 使用 JSONL 格式（每行一个 JSON），包含 ts/phase/agent/duration_min/gates_total/gates_passed/halts/artifacts 字段",
+          "type": "manual"
+        },
+        {
+          "name": "halt_log_jsonl_format",
+          "description": "halt-log 使用 JSONL 格式，包含 ts/phase/trigger/file/lines/resolution/resolution_detail/time_to_resolve_min 字段",
+          "type": "manual"
+        },
+        {
+          "name": "halt_trigger_standardized",
+          "description": "halt-log 的 trigger 使用标准值（400-line-limit），不是自由文本",
+          "type": "manual"
+        },
+        {
+          "name": "decision_log_has_user_quote",
+          "description": "decision-log 包含 user_quote 字段记录用户原话",
+          "type": "manual"
+        },
+        {
+          "name": "metrics_json_complete",
+          "description": "metrics.json 包含 stories_planned/done/carried、halts_by_type、coverage、security_grade、phase_durations_min 等汇总字段",
+          "type": "manual"
+        },
+        {
+          "name": "correct_storage_path",
+          "description": "所有日志存储在 logs/projects/pet-adoption/sprint-1/ 目录下",
+          "type": "manual"
+        },
+        {
+          "name": "no_sensitive_data",
+          "description": "日志中不包含密码、API Key、Token 等敏感信息",
+          "type": "manual"
+        },
+        {
+          "name": "dev_logging_rule_referenced",
+          "description": "执行时引用了 rules/dev-logging.md 中的日志格式规范",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 8,
+      "name": "v3.2-skill-iterator-workflow",
+      "prompt": "我已经用 FTWNOW 完成了 2 个项目的开发（pet-adoption 和 team-manager），共 4 个 Sprint。日志在 logs/projects/ 目录下。\n\n请运行 Skill Iterator 分析这些日志。\n\n[模拟日志数据]\nhalt-log 中 trigger=400-line-limit 出现 5 次（3 次在 pet-adoption，2 次在 team-manager）\nhalt-log 中 trigger=red-must-fail 出现 3 次\nPhase 4 平均耗时 180 分钟，其中 Refactor 步骤占 40%\n覆盖率从 Sprint 1 的 75% 提升到 Sprint 4 的 85%\n所有 SKIPPED_GATES 在回顾时都补上了\n\n请执行完整的 Skill Iterator 三步工作流。",
+      "expected_output": "Step 1 读取全部 skill 文件构建知识图谱，Step 2 分析日志数据识别模式，Step 3 输出带证据链的 P0/P1/P2 建议和新 eval 建议",
+      "assertions": [
+        {
+          "name": "step1_reads_all_skill_files",
+          "description": "Step 1 按顺序读取 SKILL.md + 全部 Agent + Rules + Checklists + Evals",
+          "type": "manual"
+        },
+        {
+          "name": "step1_knowledge_graph",
+          "description": "Step 1 生成知识图谱摘要（Phase 链路、硬门控、Agent 依赖关系、eval 基线）",
+          "type": "manual"
+        },
+        {
+          "name": "step2_halt_heatmap",
+          "description": "Step 2 分析 HALT 热力图 — 识别 400-line-limit 为最频繁的跨项目 HALT",
+          "type": "manual"
+        },
+        {
+          "name": "step2_phase_efficiency",
+          "description": "Step 2 分析 Phase 效率 — 识别 Phase 4 Refactor 步骤占 40% 为瓶颈",
+          "type": "manual"
+        },
+        {
+          "name": "step2_cross_project",
+          "description": "Step 2 执行跨项目对比 — 识别 400-line-limit 在两个项目中都出现为系统性问题",
+          "type": "manual"
+        },
+        {
+          "name": "step3_p0_with_evidence",
+          "description": "Step 3 的 P0 建议包含数据证据（具体日志引用）、根因分析、具体修改文件和位置",
+          "type": "manual"
+        },
+        {
+          "name": "step3_eval_suggestions",
+          "description": "Step 3 建议新增 eval 断言覆盖发现的盲区",
+          "type": "manual"
+        },
+        {
+          "name": "step3_confidence_labeled",
+          "description": "Step 3 标注了分析可信度（基于数据量：4 Sprint / 2 项目 → 中等可信度）",
+          "type": "manual"
+        },
+        {
+          "name": "output_report_format",
+          "description": "输出报告严格遵循 skill-iterator.md 定义的格式（数据来源/知识图谱快照/P0-P1-P2/Eval 建议/版本建议）",
+          "type": "manual"
+        }
+      ],
+      "files": []
     }
   ]
 }
