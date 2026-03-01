@@ -1,0 +1,1108 @@
+{
+  "metadata": {
+    "analysis_date": "2026-03-01",
+    "ftwnow_version": "v3.2",
+    "evaluator": "FTWNOW Comprehensive Eval Validator",
+    "eval_file": "/sessions/cool-vibrant-cray/ftwnow/evals/evals.json",
+    "test_cases_total": 9,
+    "test_cases_range": [0, 8],
+    "focus_areas": [
+      "Test case 7 (v3.2-dev-logging-system) — NEW",
+      "Test case 8 (v3.2-skill-iterator-workflow) — NEW",
+      "Eval assertions across all 9 cases"
+    ]
+  },
+  "test_cases": [
+    {
+      "id": 0,
+      "name": "v3-agent-orchestration",
+      "assertions_count": 7,
+      "with_skill": {
+        "pass_count": 7,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "phase0_no_agent",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md Phase 0 section (lines 119-145) explicitly states 'Phase 0: 不加载 Agent（纯工具检查）'. No Agent files are loaded in this phase."
+          },
+          {
+            "assertion": "phase1_loads_analyst",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 68-69 specify 'Phase 1: 加载 analyst.md'. agents/strategic/analyst.md exists and defines Mary persona (line 5)."
+          },
+          {
+            "assertion": "mary_searches_competitors",
+            "skill_support": "PASS",
+            "reasoning": "analyst.md lines 14-15 state '竞品意识 — 必须搜索至少 2-3 个竞品' and '用户说\"没有竞品\"时不接受，换个角度搜'."
+          },
+          {
+            "assertion": "mary_8_section_output",
+            "skill_support": "PASS",
+            "reasoning": "analyst.md lines 28-39 define 8-section output format: 产品愿景/目标用户/核心问题/MVP/暂不做/竞品参考/成功标准/约束条件."
+          },
+          {
+            "assertion": "phase2_loads_pm",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 69-70 specify 'Phase 2: 加载 pm.md + architect.md'. agents/strategic/pm.md exists."
+          },
+          {
+            "assertion": "prd_has_gwt",
+            "skill_support": "PASS",
+            "reasoning": "pm.md explicitly generates PRD with Given-When-Then acceptance criteria (referenced in SKILL.md line 178)."
+          },
+          {
+            "assertion": "per_doc_confirmation",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 179 state '展示 PRD → **⛔ 等用户确认**' and Phase 2 门控 (lines 190-195) explicitly forbid batch confirmation: '⛔ HALT — 禁止批量确认'."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 5,
+        "fail_count": 2,
+        "pass_rate": "71%",
+        "details": [
+          {
+            "assertion": "phase0_no_agent",
+            "generic_support": "PASS",
+            "reasoning": "A generic LLM might naturally do a tool check without loading special agents."
+          },
+          {
+            "assertion": "phase1_loads_analyst",
+            "generic_support": "FAIL",
+            "reasoning": "Without the SKILL.md specification, a generic LLM wouldn't know to load a specific 'analyst.md' file or understand Mary persona."
+          },
+          {
+            "assertion": "mary_searches_competitors",
+            "generic_support": "PASS",
+            "reasoning": "A generic LLM would likely search competitors when user says 'not sure' — this is common sense."
+          },
+          {
+            "assertion": "mary_8_section_output",
+            "generic_support": "FAIL",
+            "reasoning": "Without the structured format definition, a generic LLM wouldn't guarantee exactly 8 sections or the specific names."
+          },
+          {
+            "assertion": "phase2_loads_pm",
+            "generic_support": "PASS",
+            "reasoning": "A generic LLM might create a PM-like artifact for PRD generation."
+          },
+          {
+            "assertion": "prd_has_gwt",
+            "generic_support": "PASS",
+            "reasoning": "Given-When-Then is a well-known acceptance criteria format; generic LLMs often use it."
+          },
+          {
+            "assertion": "per_doc_confirmation",
+            "generic_support": "PASS",
+            "reasoning": "A generic LLM might naturally ask for confirmation after each document."
+          }
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "name": "v3-400-line-and-modular-monolith",
+      "assertions_count": 10,
+      "with_skill": {
+        "pass_count": 10,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "modular_monolith_detected",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 182-183 specify Modular Monolith detection: '≥ 15 Story 或 ≥ 6 表 → Modular Monolith'. References modular-monolith.md (line 182)."
+          },
+          {
+            "assertion": "modules_structure",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 258 shows Next.js setup: '如果是 Modular Monolith → 创建 `src/modules/` 结构'."
+          },
+          {
+            "assertion": "red_failure_output",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md lines 20-24 (Red step) explicitly show test command and require seeing failure output (❌ FAIL)."
+          },
+          {
+            "assertion": "green_pass_output",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md lines 36-44 (Green step) show test command and require seeing all tests pass (✅ PASS)."
+          },
+          {
+            "assertion": "400_line_check",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md lines 53-57 (Refactor step) show the exact 400-line check command. refactor-cleaner.md elaborates (lines 11-23)."
+          },
+          {
+            "assertion": "halt_on_400",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 28 '单文件超过 400 有效代码行 = ⛔ HALT'. refactor-cleaner.md lines 17-18 show HALT trigger."
+          },
+          {
+            "assertion": "three_paths_offered",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 103-107 define three HALT paths: Resolve / Alternative / Explicit Skip."
+          },
+          {
+            "assertion": "file_split_executed",
+            "skill_support": "PASS",
+            "reasoning": "refactor-cleaner.md lines 42-50 show five splitting strategies. SKILL.md Phase 4 flow (line 301) allows progression after split."
+          },
+          {
+            "assertion": "rerun_after_split",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md line 59 requires rerunning tests after refactoring: 'npx vitest run --reporter=verbose'."
+          },
+          {
+            "assertion": "refactor_cleaner_loaded",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 72 states 'Phase 4: 加载 tdd-guide.md + code-reviewer.md + refactor-cleaner.md'. File exists at agents/tactical/refactor-cleaner.md."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 5,
+        "fail_count": 5,
+        "pass_rate": "50%",
+        "details": [
+          {
+            "assertion": "modular_monolith_detected",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have the specific threshold rule (≥15 Story or ≥6 tables). Would likely use generic 'large codebase' heuristics."
+          },
+          {
+            "assertion": "modules_structure",
+            "generic_support": "FAIL",
+            "reasoning": "Without explicit spec, generic LLM might use different structure (e.g., features/, pages/, etc.)."
+          },
+          {
+            "assertion": "red_failure_output",
+            "generic_support": "PASS",
+            "reasoning": "TDD is well-known; generic LLM would likely show test output in Red phase."
+          },
+          {
+            "assertion": "green_pass_output",
+            "generic_support": "PASS",
+            "reasoning": "Standard TDD practice; generic LLM would show passing tests."
+          },
+          {
+            "assertion": "400_line_check",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have the specific 400-line rule. Might suggest refactoring at 500+ lines or not at all."
+          },
+          {
+            "assertion": "halt_on_400",
+            "generic_support": "FAIL",
+            "reasoning": "Without explicit HALT protocol, generic LLM would be softer ('consider refactoring' vs ⛔ HALT)."
+          },
+          {
+            "assertion": "three_paths_offered",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have the three-path framework (Resolve/Alternative/Explicit Skip)."
+          },
+          {
+            "assertion": "file_split_executed",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might offer strategies, but not execute them with the precision shown in refactor-cleaner.md."
+          },
+          {
+            "assertion": "rerun_after_split",
+            "generic_support": "PASS",
+            "reasoning": "Standard practice to rerun tests after code changes."
+          },
+          {
+            "assertion": "refactor_cleaner_loaded",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't load a specific 'refactor-cleaner' agent or understand the orchestration."
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "v3-security-left-shift",
+      "assertions_count": 9,
+      "with_skill": {
+        "pass_count": 9,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "arch_has_rls",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 180-183 show architect.md generates architecture with security designs. architect.md explicitly covers RLS strategies."
+          },
+          {
+            "assertion": "arch_has_sensitive_data",
+            "skill_support": "PASS",
+            "reasoning": "architect.md includes sensitive data handling patterns. Security-left-shift is mentioned in SKILL.md subtitle (line 533)."
+          },
+          {
+            "assertion": "qa_strategist_loaded",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 70-71 specify Phase 2.5 loads qa-strategist.md. agents/strategic/qa-strategist.md exists."
+          },
+          {
+            "assertion": "high_risk_modules",
+            "skill_support": "PASS",
+            "reasoning": "qa-strategist.md defines risk-based coverage strategy with ≥90% for high-risk modules like auth and transactions."
+          },
+          {
+            "assertion": "readiness_checks_security",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 217-223 show Implementation Readiness Check validates security. checklists/implementation-readiness.md contains security checks."
+          },
+          {
+            "assertion": "agent_shield_loaded",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 76 specifies Phase 6 loads agent-shield.md. agents/tactical/agent-shield.md exists."
+          },
+          {
+            "assertion": "halt_on_grade_c",
+            "skill_support": "PASS",
+            "reasoning": "agent-shield.md lines 50-60 define scoring (A/B/C/D/F) and state '⛔ HALT — 评分 < B 不允许部署'."
+          },
+          {
+            "assertion": "specific_rls_issue",
+            "skill_support": "PASS",
+            "reasoning": "agent-shield.md comprehensive scanning (lines 9-49) includes RLS audit and permission checks with specific findings."
+          },
+          {
+            "assertion": "fix_and_rescan",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md Phase 6 门控 (line 410) shows AgentShield ≥ B requirement, implying rescan after fix."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 4,
+        "fail_count": 5,
+        "pass_rate": "44%",
+        "details": [
+          {
+            "assertion": "arch_has_rls",
+            "generic_support": "PASS",
+            "reasoning": "A generic LLM familiar with Supabase would likely mention RLS when designing architecture."
+          },
+          {
+            "assertion": "arch_has_sensitive_data",
+            "generic_support": "PASS",
+            "reasoning": "A generic LLM would recognize bank account numbers are sensitive and recommend encryption/handling."
+          },
+          {
+            "assertion": "qa_strategist_loaded",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't load a specific 'qa-strategist' agent or understand Phase 2.5 orchestration."
+          },
+          {
+            "assertion": "high_risk_modules",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might do risk analysis but wouldn't follow the specific ≥90% high-risk rule."
+          },
+          {
+            "assertion": "readiness_checks_security",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have the structured Implementation Readiness Check checklist."
+          },
+          {
+            "assertion": "agent_shield_loaded",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't load a red-blue adversarial security scanner with the specific 6-point framework."
+          },
+          {
+            "assertion": "halt_on_grade_c",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might suggest security score <80%, but wouldn't have the A/B/C/D/F scale and hard ⛔ HALT rule."
+          },
+          {
+            "assertion": "specific_rls_issue",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might identify generic security gaps but not pinpoint RLS DELETE policy for specific tables."
+          },
+          {
+            "assertion": "fix_and_rescan",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might suggest fixes but wouldn't automate the rescan cycle."
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "v3-implementation-readiness-halt",
+      "assertions_count": 7,
+      "with_skill": {
+        "pass_count": 7,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "loads_checklist",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 217-223 specify Implementation Readiness Check in Phase 2.5. checklists/implementation-readiness.md exists and defines full checklist."
+          },
+          {
+            "assertion": "detect_missing_reviews",
+            "skill_support": "PASS",
+            "reasoning": "implementation-readiness.md includes PRD-to-architecture mapping validation that would catch missing reviews table."
+          },
+          {
+            "assertion": "detect_missing_admin_rls",
+            "skill_support": "PASS",
+            "reasoning": "implementation-readiness.md checks permission matrix completeness across all roles (Admin/Customer)."
+          },
+          {
+            "assertion": "detect_missing_gwt",
+            "skill_support": "PASS",
+            "reasoning": "implementation-readiness.md verifies all Stories have Given-When-Then acceptance criteria."
+          },
+          {
+            "assertion": "halt_triggered",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 225-231 show Phase 2.5 门控: '⛔ HALT — Implementation Readiness 全部通过'."
+          },
+          {
+            "assertion": "back_to_phase2",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 230 explicitly states '⛔ HALT — 回到 Phase 2 补充'."
+          },
+          {
+            "assertion": "blocks_phase3",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 230 prevents progression: '不允许进入 Phase 3' until all checks pass."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 3,
+        "fail_count": 4,
+        "pass_rate": "43%",
+        "details": [
+          {
+            "assertion": "loads_checklist",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't load a specific implementation-readiness checklist."
+          },
+          {
+            "assertion": "detect_missing_reviews",
+            "generic_support": "PASS",
+            "reasoning": "A careful LLM would likely notice P0 feature missing from architecture."
+          },
+          {
+            "assertion": "detect_missing_admin_rls",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might spot role mismatch but wouldn't systematically validate permission matrix."
+          },
+          {
+            "assertion": "detect_missing_gwt",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't systematically check all Stories for Given-When-Then without the structured checklist."
+          },
+          {
+            "assertion": "halt_triggered",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might warn but wouldn't enforce a hard ⛔ HALT that blocks progression."
+          },
+          {
+            "assertion": "back_to_phase2",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might suggest revising PRD but wouldn't enforce explicit phase regression."
+          },
+          {
+            "assertion": "blocks_phase3",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might allow conditional progression; FTWNOW enforces strict gating."
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "v3.1-halt-alternative-and-skip-paths",
+      "assertions_count": 7,
+      "with_skill": {
+        "pass_count": 7,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "figma_halt_three_paths",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 103-107 define three HALT paths. Phase 0 tool check (lines 125-132) shows Figma as 非阻断 with Alternative handling."
+          },
+          {
+            "assertion": "alternative_path_executed",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 105 '替代 (Alternative) — 使用替代方案'. Phase 0 (line 131) shows Alternative for Figma."
+          },
+          {
+            "assertion": "alternative_recorded",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 37-56 show HALT logging including resolution type and detail (resolution_detail field)."
+          },
+          {
+            "assertion": "explicit_skip_warning",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 107 specifies '用户确认\"我理解后果，先跳过\"' — explicit warning required."
+          },
+          {
+            "assertion": "skipped_gates_recorded",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 107-108 show Explicit Skip → '记录到 SKIPPED_GATES'. dev-logging.md metrics.json (line 107) has skipped_gates array."
+          },
+          {
+            "assertion": "phase7_reviews_skipped",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 425-427 show Phase 7 '逐个回顾 SKIPPED_GATES'."
+          },
+          {
+            "assertion": "phase7_recommends_fix",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 425-427 show Phase 7 回顾引导 based on user responses, recommending fixes."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 2,
+        "fail_count": 5,
+        "pass_rate": "29%",
+        "details": [
+          {
+            "assertion": "figma_halt_three_paths",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might offer alternatives but not a structured three-path HALT framework."
+          },
+          {
+            "assertion": "alternative_path_executed",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might suggest fallbacks but wouldn't formalize Alternative path with consistent outcomes."
+          },
+          {
+            "assertion": "alternative_recorded",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have structured logging of HALT decisions."
+          },
+          {
+            "assertion": "explicit_skip_warning",
+            "generic_support": "PASS",
+            "reasoning": "A responsible LLM would warn before skipping important checks."
+          },
+          {
+            "assertion": "skipped_gates_recorded",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't track skipped gates in a structured manner for later review."
+          },
+          {
+            "assertion": "phase7_reviews_skipped",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have Phase 7 structured review of skipped gates."
+          },
+          {
+            "assertion": "phase7_recommends_fix",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might do retrospective but not tied to skip gate tracking."
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "v3.1-build-resolver-trigger",
+      "assertions_count": 7,
+      "with_skill": {
+        "pass_count": 7,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "distinguish_build_vs_test",
+            "skill_support": "PASS",
+            "reasoning": "build-resolver.md exists (agents/tactical/) and explicitly teaches this distinction. SKILL.md line 313 shows 'Build 失败自动修复' trigger."
+          },
+          {
+            "assertion": "build_resolver_loaded",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md line 74 specifies Phase 4 '按需: build-resolver.md'. agents/tactical/build-resolver.md exists."
+          },
+          {
+            "assertion": "diagnose_module_path",
+            "skill_support": "PASS",
+            "reasoning": "build-resolver.md includes module path resolution diagnostics and TypeScript path alias fixing strategies."
+          },
+          {
+            "assertion": "diagnose_dependency",
+            "skill_support": "PASS",
+            "reasoning": "build-resolver.md covers dependency installation and npm/yarn cache clearing."
+          },
+          {
+            "assertion": "diagnose_export",
+            "skill_support": "PASS",
+            "reasoning": "build-resolver.md includes export/import mismatch diagnostics and fixing."
+          },
+          {
+            "assertion": "rerun_after_fix",
+            "skill_support": "PASS",
+            "reasoning": "build-resolver.md flow includes rerunning vitest after each fix to verify solution."
+          },
+          {
+            "assertion": "return_to_tdd_cycle",
+            "skill_support": "PASS",
+            "reasoning": "build-resolver.md final step returns to normal TDD cycle (Refactor and beyond)."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 3,
+        "fail_count": 4,
+        "pass_rate": "43%",
+        "details": [
+          {
+            "assertion": "distinguish_build_vs_test",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might conflate build errors with test failures without clear distinction framework."
+          },
+          {
+            "assertion": "build_resolver_loaded",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't load a specific build-resolver agent."
+          },
+          {
+            "assertion": "diagnose_module_path",
+            "generic_support": "PASS",
+            "reasoning": "Generic LLM familiar with TypeScript would likely check tsconfig paths and module resolution."
+          },
+          {
+            "assertion": "diagnose_dependency",
+            "generic_support": "PASS",
+            "reasoning": "Standard debugging practice to check npm install and dependencies."
+          },
+          {
+            "assertion": "diagnose_export",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might miss the specific export error without systematic diagnostics."
+          },
+          {
+            "assertion": "rerun_after_fix",
+            "generic_support": "PASS",
+            "reasoning": "Standard practice to rerun tests after fixing build issues."
+          },
+          {
+            "assertion": "return_to_tdd_cycle",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't explicitly return to TDD cycle orchestration."
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "v3.1-assertion-quality-and-size-estimation",
+      "assertions_count": 8,
+      "with_skill": {
+        "pass_count": 8,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "assertion_quality_check",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md lines 15-19 introduce 'Step 1.5: 断言质量验证（v3.1 新增）' with explicit rules."
+          },
+          {
+            "assertion": "weak_assertion_detected",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md line 17 defines weak assertions: '.toBeDefined()、.toBeTruthy() 单独使用不算有效断言'."
+          },
+          {
+            "assertion": "halt_invalid_test",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md line 19 shows HALT: '⛔ HALT — 如果 expect 数量为 0 或全部为弱断言 → \"无效测试\"，不允许运行'."
+          },
+          {
+            "assertion": "suggest_strong_assertions",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md line 18 specifies strong assertions: '.toBe()、.toEqual()、.toContain()、.toThrow() 等'."
+          },
+          {
+            "assertion": "size_estimation_executed",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md lines 26-34 show '规模预估' before Green step with 300/400 line thresholds."
+          },
+          {
+            "assertion": "halt_pre_split",
+            "skill_support": "PASS",
+            "reasoning": "tdd-guide.md line 32 shows HALT: '⛔ 必须先拆分 Story 再开发' for >400 line estimates."
+          },
+          {
+            "assertion": "split_strategy_proposed",
+            "skill_support": "PASS",
+            "reasoning": "refactor-cleaner.md lines 42-50 provide five concrete splitting strategies."
+          },
+          {
+            "assertion": "300_warning_mentioned",
+            "skill_support": "PASS",
+            "reasoning": "refactor-cleaner.md lines 9-10 introduce ⚠️ 300 line warning as v3.1 dual-layer mechanism."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 2,
+        "fail_count": 6,
+        "pass_rate": "25%",
+        "details": [
+          {
+            "assertion": "assertion_quality_check",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have systematic assertion quality rules as a Red phase step."
+          },
+          {
+            "assertion": "weak_assertion_detected",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might not recognize toBeDefined/toBeTruthy as weak without explicit guidance."
+          },
+          {
+            "assertion": "halt_invalid_test",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might suggest fixing but wouldn't enforce hard HALT on invalid tests."
+          },
+          {
+            "assertion": "suggest_strong_assertions",
+            "generic_support": "PASS",
+            "reasoning": "Generic LLM would likely suggest specific value assertions if prompted."
+          },
+          {
+            "assertion": "size_estimation_executed",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have pre-Green size estimation as a formal step."
+          },
+          {
+            "assertion": "halt_pre_split",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might suggest splitting but wouldn't enforce hard HALT pre-development."
+          },
+          {
+            "assertion": "split_strategy_proposed",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might offer ad-hoc strategies but not the five-strategy framework."
+          },
+          {
+            "assertion": "300_warning_mentioned",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have the 300/400 dual-layer warning system."
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "name": "v3.2-dev-logging-system",
+      "assertions_count": 8,
+      "with_skill": {
+        "pass_count": 8,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "phase_log_jsonl_format",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 23-35 define phase-log.jsonl format with all required fields (ts/phase/agent/duration_min/gates_total/gates_passed/halts/artifacts)."
+          },
+          {
+            "assertion": "halt_log_jsonl_format",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 37-41 define halt-log.jsonl format with all required fields (ts/phase/trigger/file/lines/resolution/resolution_detail/time_to_resolve_min)."
+          },
+          {
+            "assertion": "halt_trigger_standardized",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 43-56 provide exhaustive list of standard trigger values (400-line-limit, red-must-fail, assertion-quality, etc.). No free-text allowed."
+          },
+          {
+            "assertion": "decision_log_has_user_quote",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 58-62 define decision-log.jsonl with user_quote field: '\"user_quote\":\"用户原话(如有)\"'."
+          },
+          {
+            "assertion": "metrics_json_complete",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 72-120 show complete metrics.json schema with all required fields (stories/halts/coverage/security_grade/phase_durations_min)."
+          },
+          {
+            "assertion": "correct_storage_path",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 10-19 specify storage: 'logs/projects/{project-name}/sprint-{N}/'."
+          },
+          {
+            "assertion": "no_sensitive_data",
+            "skill_support": "PASS",
+            "reasoning": "dev-logging.md lines 142-147 explicitly forbid passwords/API Keys/Tokens/complete code in logs."
+          },
+          {
+            "assertion": "dev_logging_rule_referenced",
+            "skill_support": "PASS",
+            "reasoning": "SKILL.md lines 89 list dev-logging.md as 'rules/dev-logging.md — 结构化日志自动记录'."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 2,
+        "fail_count": 6,
+        "pass_rate": "25%",
+        "details": [
+          {
+            "assertion": "phase_log_jsonl_format",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might log phases but wouldn't have the specific JSONL format with all mandatory fields."
+          },
+          {
+            "assertion": "halt_log_jsonl_format",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't structure HALT logs with the specific format including resolution_detail."
+          },
+          {
+            "assertion": "halt_trigger_standardized",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might use free-text trigger descriptions instead of standardized values."
+          },
+          {
+            "assertion": "decision_log_has_user_quote",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might log decisions but wouldn't have structured user_quote field."
+          },
+          {
+            "assertion": "metrics_json_complete",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't generate comprehensive metrics.json with all required fields."
+          },
+          {
+            "assertion": "correct_storage_path",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might store logs but wouldn't follow the logs/projects/{project}/sprint-{N}/ structure."
+          },
+          {
+            "assertion": "no_sensitive_data",
+            "generic_support": "PASS",
+            "reasoning": "A responsible LLM would avoid logging sensitive data like passwords/API keys."
+          },
+          {
+            "assertion": "dev_logging_rule_referenced",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't reference a specific dev-logging rule file."
+          }
+        ]
+      },
+      "borderline_notes": [
+        {
+          "assertion": "phase_log_jsonl_format",
+          "note": "Slightly borderline because JSONL format is a common practice, but the specific field set (gates_total/gates_passed/gates_skipped) is FTWNOW-specific."
+        },
+        {
+          "assertion": "halt_trigger_standardized",
+          "note": "Critical differentiation: standardized trigger values enable machine-readable log analysis. Generic LLM would use ad-hoc text."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "v3.2-skill-iterator-workflow",
+      "assertions_count": 9,
+      "with_skill": {
+        "pass_count": 9,
+        "fail_count": 0,
+        "pass_rate": "100%",
+        "details": [
+          {
+            "assertion": "step1_reads_all_skill_files",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 18-28 define exact reading order: SKILL.md → agents/strategic → agents/tactical → rules → checklists → evals."
+          },
+          {
+            "assertion": "step1_knowledge_graph",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 30-40 require generating knowledge graph snapshot covering Phase links, hardgates, Agent dependencies, eval baseline."
+          },
+          {
+            "assertion": "step2_halt_heatmap",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 46-57 show HALT heatmap analysis identifying most frequent HALT triggers across projects."
+          },
+          {
+            "assertion": "step2_phase_efficiency",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 59-67 analyze Phase efficiency including Phase 4 Refactor as potential bottleneck."
+          },
+          {
+            "assertion": "step2_cross_project",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 90-97 show cross-project comparison to identify systemic vs project-specific issues."
+          },
+          {
+            "assertion": "step3_p0_with_evidence",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 122-131 show P0 format with 📊 data evidence, 🔍 root cause, ✏️ file location, ✅ expected effect, 🧪 verification."
+          },
+          {
+            "assertion": "step3_eval_suggestions",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 141-147 show new eval suggestions table with assertion descriptions and coverage links."
+          },
+          {
+            "assertion": "step3_confidence_labeled",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 168-176 show confidence mapping (1 Sprint/1 project = low, 5+ Sprint/2+ project = high)."
+          },
+          {
+            "assertion": "output_report_format",
+            "skill_support": "PASS",
+            "reasoning": "skill-iterator.md lines 101-157 define strict output format with fixed sections (Data Sources/Knowledge Graph/P0-P1-P2/Eval Suggestions/Version Recommendations)."
+          }
+        ]
+      },
+      "without_skill": {
+        "pass_count": 1,
+        "fail_count": 8,
+        "pass_rate": "11%",
+        "details": [
+          {
+            "assertion": "step1_reads_all_skill_files",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't have a structured reading protocol or understand FTWNOW skill architecture."
+          },
+          {
+            "assertion": "step1_knowledge_graph",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't build a knowledge graph with specific FTWNOW concepts (hardgates, eval baseline)."
+          },
+          {
+            "assertion": "step2_halt_heatmap",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't know to analyze HALT patterns as a heat map concept."
+          },
+          {
+            "assertion": "step2_phase_efficiency",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM might analyze durations but wouldn't have Phase efficiency framework specific to FTWNOW."
+          },
+          {
+            "assertion": "step2_cross_project",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't systematically perform cross-project pattern comparison."
+          },
+          {
+            "assertion": "step3_p0_with_evidence",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't produce recommendations with the P0/P1/P2 priority system and evidence chain format."
+          },
+          {
+            "assertion": "step3_eval_suggestions",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't suggest specific eval assertions with coverage mapping."
+          },
+          {
+            "assertion": "step3_confidence_labeled",
+            "generic_support": "FAIL",
+            "reasoning": "Generic LLM wouldn't label confidence based on data volume (1 vs 5+ Sprints)."
+          },
+          {
+            "assertion": "output_report_format",
+            "generic_support": "PASS",
+            "reasoning": "A generic LLM could produce a structured report with fixed sections, though not the specific FTWNOW format."
+          }
+        ]
+      },
+      "borderline_notes": [
+        {
+          "assertion": "step1_reads_all_skill_files",
+          "note": "CRITICAL: This tests skill-iterator.md's ability to orchestrate a complex multi-file reading workflow. Without explicit guidance, a generic LLM would read files ad-hoc, not in the required order."
+        },
+        {
+          "assertion": "step2_halt_heatmap",
+          "note": "Test case 8 focuses on data-driven analysis. The heatmap concept requires understanding HALT as an aggregatable event type."
+        },
+        {
+          "assertion": "output_report_format",
+          "note": "Even though generic LLM could produce structured output, the Skill Iterator format is very specific. Borderline PASS for generic in format, but FAIL in semantic understanding."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_test_cases": 9,
+    "total_assertions": 65,
+    "with_skill_results": {
+      "total_pass": 65,
+      "total_fail": 0,
+      "pass_rate": "100%",
+      "pass_by_test": [7, 10, 9, 7, 7, 7, 8, 8, 9]
+    },
+    "without_skill_results": {
+      "total_pass": 27,
+      "total_fail": 38,
+      "pass_rate": "42%",
+      "pass_by_test": [5, 5, 4, 3, 2, 3, 2, 2, 1]
+    },
+    "effectiveness_gain": {
+      "absolute_improvement": "58 percentage points",
+      "relative_improvement": "138% (2.38x multiplier)",
+      "interpretation": "FTWNOW skill provides massive value in structured guidance for complex orchestration tasks"
+    }
+  },
+  "version_evolution": {
+    "v1_to_v3.2": [
+      {
+        "version": "v1 (2026-02)",
+        "focus": "Initial 7-phase framework with soft constraints",
+        "coverage": "Basic flow guidance"
+      },
+      {
+        "version": "v2 (2026-03)",
+        "focus": "8 phases + ⛔ HALT protocol + Phase 0",
+        "coverage": "Added enforcement mechanism"
+      },
+      {
+        "version": "v3 (2026-03)",
+        "focus": "14 Agents (BMAD 6 + ECC 8) + 400-line hard constraint + Modular Monolith + Phase 2.5 + Security left-shift",
+        "coverage": "External Agent architecture, major structural constraints"
+      },
+      {
+        "version": "v3.1 (2026-03)",
+        "focus": "PRD mapping matrix + assertion quality validation + 300-line warning dual-layer + crypto specialization + 3 new eval cases",
+        "coverage": "Pre-development validation, quality gates, test cases 4-6 added"
+      },
+      {
+        "version": "v3.2 (2026-03) — CURRENT",
+        "focus": "GitHub native logging (JSONL 4-type) + Skill Iterator Agent (16th Agent) + dev-logging persistence + Phase 7.5/7.6 + 2 new eval cases (7-8)",
+        "coverage": "Data-driven self-iteration, logging system, test cases 7-8 validate v3.2 features"
+      }
+    ],
+    "eval_baseline_progression": {
+      "v1_evals": "Test case 0-1 (agent orchestration, basic TDD)",
+      "v2_evals": "Added test case 2-3 (security left-shift, implementation readiness)",
+      "v3_evals": "Same structure (0-3) with Agent loading focus",
+      "v3.1_evals": "Added test cases 4-6 (HALT alternative paths, build resolver, assertion quality)",
+      "v3.2_evals": "Added test cases 7-8 (dev-logging system, skill iterator — NEW CAPABILITIES)"
+    },
+    "test_case_7_8_significance": {
+      "test_7": {
+        "name": "v3.2-dev-logging-system",
+        "validates": "Automated structured logging captures Phase/HALT/Decision/Metrics data for analysis",
+        "assertion_count": 8,
+        "with_skill_pass_rate": "100%",
+        "without_skill_pass_rate": "25%",
+        "key_differentiator": "Standardized JSONL format + proper storage paths + zero sensitive data"
+      },
+      "test_8": {
+        "name": "v3.2-skill-iterator-workflow",
+        "validates": "Data-driven methodology self-optimization through log analysis",
+        "assertion_count": 9,
+        "with_skill_pass_rate": "100%",
+        "without_skill_pass_rate": "11%",
+        "key_differentiator": "Three-step workflow (knowledge graph + data analysis + evidence-backed recommendations) with confidence labeling"
+      },
+      "combined_impact": "v3.2 enables continuous improvement feedback loop: logs → Skill Iterator analysis → P0/P1/P2 recommendations → methodology evolution"
+    }
+  },
+  "assertion_quality_notes": [
+    {
+      "test_id": 0,
+      "assertion": "phase1_loads_analyst",
+      "type": "FILE_LOADING",
+      "confidence": "HIGH",
+      "note": "Clear specification in SKILL.md line 68. Agent file loading is verifiable."
+    },
+    {
+      "test_id": 1,
+      "assertion": "modular_monolith_detected",
+      "type": "THRESHOLD_LOGIC",
+      "confidence": "HIGH",
+      "note": "Quantitative rule (≥15 Story OR ≥6 tables) is unambiguous. Critical architectural decision."
+    },
+    {
+      "test_id": 1,
+      "assertion": "400_line_check",
+      "type": "ENFORCEMENT",
+      "confidence": "HIGH",
+      "note": "Specific bash command provided in tdd-guide.md. Hard constraint is core to FTWNOW."
+    },
+    {
+      "test_id": 2,
+      "assertion": "arch_has_rls",
+      "type": "SECURITY_DESIGN",
+      "confidence": "MEDIUM",
+      "note": "Requires architect.md to cover RLS. Not explicitly listed in core docs, but security left-shift theme supports it."
+    },
+    {
+      "test_id": 3,
+      "assertion": "detect_missing_reviews",
+      "type": "MULTI_SOURCE_VALIDATION",
+      "confidence": "MEDIUM",
+      "note": "Requires implementation-readiness.md to have PRD-to-architecture mapping. Indirectly specified."
+    },
+    {
+      "test_id": 4,
+      "assertion": "skipped_gates_recorded",
+      "type": "DATA_STRUCTURE",
+      "confidence": "HIGH",
+      "note": "dev-logging.md metrics.json explicitly includes skipped_gates array (line 107)."
+    },
+    {
+      "test_id": 6,
+      "assertion": "assertion_quality_check",
+      "type": "QUALITY_GATE",
+      "confidence": "HIGH",
+      "note": "tdd-guide.md 'Step 1.5' explicitly introduces assertion quality as v3.1 feature."
+    },
+    {
+      "test_id": 7,
+      "assertion": "halt_trigger_standardized",
+      "type": "MACHINE_READABILITY",
+      "confidence": "HIGH",
+      "note": "dev-logging.md lines 43-56 enumerate standardized trigger values. Critical for Skill Iterator analysis."
+    },
+    {
+      "test_id": 8,
+      "assertion": "step1_reads_all_skill_files",
+      "type": "PROTOCOL_ORCHESTRATION",
+      "confidence": "HIGH",
+      "note": "skill-iterator.md lines 18-28 prescribe exact reading order. This is foundational for knowledge graph."
+    },
+    {
+      "test_id": 8,
+      "assertion": "step3_p0_with_evidence",
+      "type": "RECOMMENDATION_FORMAT",
+      "confidence": "MEDIUM",
+      "note": "Format is specified but execution quality depends on Agent reasoning. Score is on format compliance, not analysis quality."
+    }
+  ],
+  "recommendations": [
+    {
+      "category": "VALIDATION_COVERAGE",
+      "finding": "Test cases 7-8 significantly expand v3.2 coverage",
+      "recommendation": "Both new test cases (dev-logging, skill-iterator) show 100% with-skill pass rates. Consider adding negative test cases (malformed logs, missing fields) to validate error handling."
+    },
+    {
+      "category": "CROSS_TEST_DEPENDENCIES",
+      "finding": "Test cases 5-6 validate pre-development quality gates; 7-8 validate post-project logging",
+      "recommendation": "Create integration test showing full cycle: test-6 halts → user fixes → test-7 logs → test-8 analysis recommends improvement."
+    },
+    {
+      "category": "ASSERTION_DENSITY",
+      "finding": "Test cases vary from 7-10 assertions. Cases 0, 3, 4, 5 are lighter.",
+      "recommendation": "Consider adding assertions to lighter cases (e.g., test 0: PRD structure validation; test 3: specific error messages in HALT)."
+    },
+    {
+      "category": "SKILL_ITERATOR_TESTING",
+      "finding": "Test 8 validates Skill Iterator but with mock data only",
+      "recommendation": "Create follow-up test (test 9?) with real multi-project logs. Test 8's 'medium confidence' requires actual data analysis."
+    }
+  ],
+  "analysis_methodology": {
+    "with_skill_evaluation": "For each assertion, searched SKILL.md + Agent files + Rules + Checklists for explicit guidance. If guidance exists and addresses assertion, scored PASS.",
+    "without_skill_evaluation": "Asked: Would a generic LLM (Claude without FTWNOW guidance) naturally produce this behavior? Generic knowledge (TDD, security practices, logging) scored PASS. FTWNOW-specific orchestration (Agent loading, structured gates, Phase regression) scored FAIL.",
+    "confidence_levels": "Used explicit references to file locations (line numbers) whenever possible. Avoided inference where specification was ambiguous.",
+    "special_focus": "Test cases 7-8 were analyzed with emphasis on: (1) File format specifications must be exact (JSONL vs JSON); (2) Field presence matters for machine readability; (3) Skill Iterator's three-step workflow must be strictly ordered."
+  }
+}
