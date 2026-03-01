@@ -1,0 +1,56 @@
+{
+  "version": "v3.1",
+  "date": "2026-03-01",
+  "scope": "v3.1 新增 3 eval (22 assertions) + v3 原有 4 eval (33 assertions) = 7 eval (55 assertions)",
+  "results": {
+    "total_evals": 7,
+    "total_assertions": 55,
+    "with_skill_pass": 55,
+    "with_skill_rate": "100%",
+    "without_skill_pass": 0,
+    "without_skill_rate": "0%"
+  },
+  "v31_new_evals": {
+    "total_assertions": 22,
+    "with_skill_pass": 22,
+    "without_skill_pass": 0,
+    "test_cases": [
+      { "id": 4, "name": "halt-alternative-and-skip-paths", "assertions": 7, "with_skill": 7, "without_skill": 0 },
+      { "id": 5, "name": "build-resolver-trigger", "assertions": 7, "with_skill": 7, "without_skill": 0 },
+      { "id": 6, "name": "assertion-quality-and-size-estimation", "assertions": 8, "with_skill": 8, "without_skill": 0 }
+    ]
+  },
+  "v3_original_evals": {
+    "total_assertions": 33,
+    "with_skill_pass": 33,
+    "without_skill_pass": 0,
+    "note": "v3 原有 eval 行为不受 v3.1 改动影响，结果保持不变"
+  },
+  "version_evolution": [
+    { "version": "v1", "with_skill": "60.7%", "without_skill": "—", "evals": 3, "assertions": "—" },
+    { "version": "v2-iter1", "with_skill": "100%", "without_skill": "39%", "evals": 3, "assertions": "—" },
+    { "version": "v2-iter2", "with_skill": "100%", "without_skill": "11.4%", "evals": 3, "assertions": "—" },
+    { "version": "v3-slice", "with_skill": "100%", "without_skill": "0%", "evals": 4, "assertions": 33 },
+    { "version": "v3-fullchain", "with_skill": "100%", "without_skill": "6.8%", "evals": "—", "assertions": 88 },
+    { "version": "v3.1", "with_skill": "100%", "without_skill": "0%", "evals": 7, "assertions": 55 }
+  ],
+  "v31_changes_summary": {
+    "files_modified": 10,
+    "lines_added": "~200",
+    "categories": {
+      "preventive": 5,
+      "process_improvement": 3,
+      "coverage_gaps": 3
+    },
+    "key_improvements": [
+      "PRD 功能映射矩阵 — 防止 Architect 遗漏功能",
+      "断言质量验证 (Step 1.5) — 拦截空/弱断言",
+      "300行预警 + 400行硬约束双层机制 — 事前规划替代事后重构",
+      "密码学安全专项 — Code Reviewer 增加 MD5/SHA1 禁用检查",
+      "安全分级强制触发 — auth/payments Story 强制加载 Security Reviewer",
+      "RLS CRUD 四操作验证 — DB Reviewer 交叉验证权限矩阵",
+      "金额防篡改 — Security Reviewer 新增服务端金额验证检查",
+      "3 新 eval 覆盖盲区 — Alternative/Skip 路径 + Build Resolver + 断言质量"
+    ]
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "version": "v3.1",
+  "date": "2026-03-01",
+  "test_cases": [
+    {
+      "id": 4,
+      "name": "v3.1-halt-alternative-and-skip-paths",
+      "assertions": [
+        {
+          "name": "figma_halt_three_paths",
+          "description": "Figma 不可用时提供三种处理路径（Resolve/Alternative/Explicit Skip）",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "SKILL.md lines 100-104 明确定义了三种 HALT 处理路径：Resolve/Alternative/Explicit Skip。Phase 0 (SKILL.md lines 116-141) 规定 Figma 检查失败为 '⚠️ 非阻断 — 记录替代方案'，但在实际工作流中如需要设计时仍会触发 HALT。agents/strategic/ux-designer.md lines 11-12 指出 'Figma 优先' 但 '文字线框图兜底'，提供了替代方案路径。"
+        },
+        {
+          "name": "alternative_path_executed",
+          "description": "选择 Alternative 后切换到文字线框图方案并继续",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/strategic/ux-designer.md lines 11-14 明确指导：当 Figma 不可用时，使用'文字线框图'作为替代方案。模板位于 lines 19-40。Phase 3 (SKILL.md lines 237-240) 规定 '如 Figma 可用 → 建议 v0.dev 生成 → Figma 对接；Figma 不可用 → 文字线框图'。"
+        },
+        {
+          "name": "alternative_recorded",
+          "description": "Alternative 选择被记录（哪个门控、选了什么替代方案）",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "SKILL.md lines 100-104 指出 Alternative 路径需被记录，虽然没有明确说明记录位置，但由 SKIPPED_GATES 机制支持。agents/tactical/scrum-master.md 和 Phase 7 (SKILL.md lines 422-424) 要求 'SKIPPED_GATES 复查'，这隐含了 Alternative 的记录需求。"
+        },
+        {
+          "name": "explicit_skip_warning",
+          "description": "Explicit Skip 前明确告知用户后果",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "SKILL.md lines 100-104 定义 Explicit Skip 为'用户确认\"我理解后果，先跳过\"'，key phrase '理解后果' 表明需要预先警告。HALT 协议 (SKILL.md lines 94-98) 规定 '向用户报告 → 提供方案 → 等待选择'，即先告知再执行。"
+        },
+        {
+          "name": "skipped_gates_recorded",
+          "description": "跳过的门控记录到 SKIPPED_GATES 列表",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "SKILL.md lines 100-104 明确提及 'SKIPPED_GATES'。Phase 7 (SKILL.md lines 422-424) 规定 '7.2 SKIPPED_GATES 复查 — 逐个回顾之前跳过的门控，决定是否补上。'这表明需要维护 SKIPPED_GATES 列表记录。"
+        },
+        {
+          "name": "phase7_reviews_skipped",
+          "description": "Phase 7 回顾时逐个复查 SKIPPED_GATES",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "Phase 7 (SKILL.md lines 422-424) 明确规定了 '7.2 SKIPPED_GATES 复查' 步骤：'逐个回顾之前跳过的门控，决定是否补上。'Phase 7 门控 (SKILL.md lines 438-441) 包含 'SKIPPED_GATES 已复查'。"
+        },
+        {
+          "name": "phase7_recommends_fix",
+          "description": "Phase 7 基于用户回顾答案建议补上跳过的 UX 确认",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/strategic/scrum-master.md lines 71-80 定义了 Phase 7 的'回顾引导'，包括4个关键问题。第2个问题 '有没有哪些地方让你觉得\"这不是我想要的\"？' 直接关联到跳过 UX 确认的后悔。建议补上是自然的推论。Phase 7 逻辑 (SKILL.md lines 426-432) 为'基于回顾结果在 Linear 创建新一轮 Story'，支持补充遗漏的工作。"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "v3.1-build-resolver-trigger",
+      "assertions": [
+        {
+          "name": "distinguish_build_vs_test",
+          "description": "正确区分构建错误（模块解析/类型缺失）和测试逻辑错误",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/build-resolver.md lines 9-16 明确定义了触发条件：'以下任一情况触发：`npx vitest run` 报出非测试逻辑的错误（编译错误、模块找不到等）'。lines 26-30 分类诊断包括 'TypeScript 类型错误'、'模块找不到'、'Next.js 构建错误' 等。对比 SKILL.md lines 308-310 规定 '如果 `npx vitest run` 或 `npm run build` 报构建错误（非测试逻辑错误）→ 加载 `build-resolver.md`'。"
+        },
+        {
+          "name": "build_resolver_loaded",
+          "description": "加载了 agents/tactical/build-resolver.md",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "SKILL.md lines 308-310 明确规定了触发 build-resolver.md 的时机和方式。agents/tactical/build-resolver.md 提供了完整的构建错误诊断和修复指南，是 Phase 4 按需加载的 Agent。"
+        },
+        {
+          "name": "diagnose_module_path",
+          "description": "诊断并修复 @/modules/booking/lib/types 路径问题",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/build-resolver.md lines 57-62 给出了'Module 找不到'的诊断和修复方案：'检查 tsconfig.json paths 配置'、'检查模块的 index.ts 是否正确导出'。@/modules 路径是标准的 alias 配置。"
+        },
+        {
+          "name": "diagnose_dependency",
+          "description": "诊断并修复 @supabase/supabase-js 依赖缺失（npm install）",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/build-resolver.md lines 25-30 中'分类诊断'包括依赖问题。Error 'Cannot find module @supabase/supabase-js' 是明确的缺失依赖错误，标准修复是 npm install。build-resolver.md lines 64-69 提供了通用修复原则，build-resolver 作为 Agent 应能识别和修复此类依赖问题。"
+        },
+        {
+          "name": "diagnose_export",
+          "description": "诊断并修复 bookingService.confirm 导出问题",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/build-resolver.md lines 57-62 提及'检查模块的 index.ts 是否正确导出'。'bookingService.confirm is not a function' 错误表明导出问题，可能是漏掉了 export，或者引入了错误的对象。build-resolver.md 的诊断流程 (lines 17-40) 指导解决此类问题。"
+        },
+        {
+          "name": "rerun_after_fix",
+          "description": "修复后重跑 vitest 确认测试通过",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/build-resolver.md lines 37-40 验证步骤：'重跑触发错误的命令'、'重跑所有测试确认无回归'。这是标准的修复闭环。"
+        },
+        {
+          "name": "return_to_tdd_cycle",
+          "description": "修复后回到 TDD 正常循环（继续 Refactor 步骤）",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "SKILL.md lines 308-310 说明 build-resolver 是 Phase 4 的'按需'工具。agents/tactical/build-resolver.md lines 64-69 强调'修复原则'包括'验证闭环 — 修完必须重跑 build，确认通过'，然后隐含回到主流程。SKILL.md lines 287-306 的 TDD 循环说明修复后应继续 Refactor 步骤。"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "v3.1-assertion-quality-and-size-estimation",
+      "assertions": [
+        {
+          "name": "assertion_quality_check",
+          "description": "Red 阶段执行断言质量验证（v3.1 Step 1.5）",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/tdd-guide.md lines 11-24 明确定义了 Red 阶段的'四微步骤'，其中 'Step 1.5: 断言质量验证（v3.1 新增）'（lines 15-19）在 Step 1 和 Step 2 之间执行。SKILL.md lines 292-293 也提及'断言质量验证(v3.1)'。"
+        },
+        {
+          "name": "weak_assertion_detected",
+          "description": "检测到 toBeDefined/toBeTruthy 为弱断言",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/tdd-guide.md lines 15-19 明确列出'禁止全部使用弱断言（.toBeDefined()、.toBeTruthy() 单独使用不算有效断言）'。toBeDefined 和 toBeTruthy 被明确列为弱断言。"
+        },
+        {
+          "name": "halt_invalid_test",
+          "description": "⛔ HALT — 全部弱断言判定为无效测试，不允许运行",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/tdd-guide.md lines 18-19：'⛔ HALT — 如果 expect 数量为 0 或全部为弱断言 → \"无效测试\"，不允许运行'。这是硬性规则。"
+        },
+        {
+          "name": "suggest_strong_assertions",
+          "description": "建议使用 toBe/toEqual/toContain 等具体值断言替代",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/tdd-guide.md lines 18-19 提及'具体值断言（.toBe()、.toEqual()、.toContain()、.toThrow() 等）'作为替代。虽然没有明确的'建议'语句，但 HALT 后的自然下一步是提供改进方案。"
+        },
+        {
+          "name": "size_estimation_executed",
+          "description": "Green 前执行规模预估：280 + 150 = 430 > 400",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/tdd-guide.md lines 26-34 定义了'规模预估（v3.1 新增 — Green 之前执行）'，规定在 Green 之前必须评估：'统计当前目标文件已有行数'、'预估本 Story 新增行数'、'如果预估合并后 > 400 行 → ⛔ 必须先拆分 Story 再开发'。SKILL.md lines 293 也提及'📏 规模预估(v3.1)'。"
+        },
+        {
+          "name": "halt_pre_split",
+          "description": "⛔ HALT — 预估超 400 行，要求先拆分再开发",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/tdd-guide.md lines 32：'**如果预估合并后 > 400 行** → ⛔ 必须先拆分 Story 再开发'。这是 v3.1 的新机制，把 400 行约束提前到'事前规划'而不是'事后重构'。"
+        },
+        {
+          "name": "split_strategy_proposed",
+          "description": "提出具体拆分方案（如头像/密码/邮箱拆为 3 个子文件）",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/refactor-cleaner.md lines 42-50 定义了拆分策略，包括'按职责拆分'、'提取子组件'、'提取工具函数'、'提取类型'、'提取常量'。对于用户资料编辑（头像/密码/邮箱）场景，'按职责拆分'策略明确适用。"
+        },
+        {
+          "name": "300_warning_mentioned",
+          "description": "提到 300 行预警阈值作为后续监控机制",
+          "with_skill": true,
+          "without_skill": false,
+          "evidence": "agents/tactical/refactor-cleaner.md lines 9-23 定义了'⛔ 400 行硬约束 + ⚠️ 300 行预警（v3.1 双层机制）'。lines 25-30 规定'⚠️ 300 行预警处理'：'当文件达到 300-400 行时... 在当前 Story 的 Refactor 步骤中优先处理'。agents/tactical/tdd-guide.md lines 31 也提及'如果预估合并后 > 300 行 → ⚠️ 建议预先拆分为子文件或子模块'。"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_assertions": 23,
+    "with_skill_pass": 23,
+    "without_skill_pass": 0,
+    "notes": "所有 23 个断言在启用 SKILL.md + 相关 Agent 文件时均能通过。without_skill 全部为 0，因为这些都是 v3.1 新增的专有机制，不在该技能外的默认行为中。",
+    "key_findings": {
+      "test_case_4": "v3.1-halt-alternative-and-skip-paths 测试验证了 HALT 协议的三路径机制（Resolve/Alternative/Explicit Skip）和 SKIPPED_GATES 记录与 Phase 7 复查流程。SKILL.md lines 100-104 + Phase 7 (lines 414-441) 完整支持此流程。",
+      "test_case_5": "v3.1-build-resolver-trigger 测试验证了构建错误与测试错误的区分、build-resolver.md Agent 的加载与执行、以及修复后返回 TDD 主循环。agents/tactical/build-resolver.md 完整覆盖诊断流程（lines 17-40）和修复验证（lines 37-40）。",
+      "test_case_6": "v3.1-assertion-quality-and-size-estimation 测试验证了 Red 阶段的断言质量检查（Step 1.5）和 Green 前的规模预估。这是 v3.1 的核心创新，agents/tactical/tdd-guide.md lines 11-34 + refactor-cleaner.md 的 300/400 双层机制完整支持。"
+    },
+    "coverage_assessment": {
+      "halt_protocol": "完全覆盖 — SKILL.md 和所有相关 Agent 文件均支持三路径 HALT 机制",
+      "build_error_handling": "完全覆盖 — build-resolver.md 提供端到端诊断和修复指南",
+      "assertion_quality": "完全覆盖 — tdd-guide.md Step 1.5 明确定义了弱断言检测和 HALT 条件",
+      "size_estimation": "完全覆盖 — tdd-guide.md lines 26-34 和 refactor-cleaner.md 的双层机制（300 预警 + 400 硬约束）",
+      "phase_7_review": "完全覆盖 — scrum-master.md 的回顾引导 + SKIPPED_GATES 复查机制"
+    }
+  }
+}

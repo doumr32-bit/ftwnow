@@ -1,0 +1,343 @@
+{
+  "skill_name": "ftwnow",
+  "evals": [
+    {
+      "id": 0,
+      "name": "v3-agent-orchestration",
+      "prompt": "我想做一个宠物领养平台，帮流浪动物找到新家。\n\n[模拟用户回答]\nQ: 产品愿景? A: 一个连接流浪动物救助站和领养人的平台\nQ: 目标用户? A: 想领养宠物的年轻人\nQ: 功能? A: 浏览宠物、提交申请、救助站管理后台\nQ: 竞品? A: 不清楚\nQ: 约束? A: 一个月内上线\n\n请执行 Phase 0 → Phase 1 → Phase 2 前半段（PRD）。执行时明确说明你加载了哪个 Agent 文件，以该 Agent 的 persona 方式工作。",
+      "expected_output": "Phase 0 纯工具检查无 Agent，Phase 1 加载 analyst.md 以 Mary 方式执行 5 轮问答，Phase 2 加载 pm.md 以 John 方式生成 PRD",
+      "assertions": [
+        {
+          "name": "phase0_no_agent",
+          "description": "Phase 0 执行工具链检查且不加载任何 Agent 定义文件",
+          "type": "manual"
+        },
+        {
+          "name": "phase1_loads_analyst",
+          "description": "Phase 1 明确加载 agents/strategic/analyst.md 并以 Mary 的方式执行",
+          "type": "manual"
+        },
+        {
+          "name": "mary_searches_competitors",
+          "description": "Mary 在用户说'不清楚竞品'时主动搜索竞品",
+          "type": "manual"
+        },
+        {
+          "name": "mary_8_section_output",
+          "description": "Mary 产出 8 节需求摘要文档",
+          "type": "manual"
+        },
+        {
+          "name": "phase2_loads_pm",
+          "description": "Phase 2 加载 agents/strategic/pm.md 并以 John 的方式生成 PRD",
+          "type": "manual"
+        },
+        {
+          "name": "prd_has_gwt",
+          "description": "PRD 包含 Given-When-Then 验收标准",
+          "type": "manual"
+        },
+        {
+          "name": "per_doc_confirmation",
+          "description": "每份文档单独确认，不批量确认",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "v3-400-line-and-modular-monolith",
+      "prompt": "我有一个项目已经完成了 Phase 0-3。项目是一个多角色团队管理 SaaS（Admin/Member/Guest），有 8 张表、18 个 Story。\n\n现在进入 Phase 4，当前 Story 是：AUTH-01 用户注册功能。\n\n请执行 Phase 4 的 TDD 循环（Red → Green → Refactor），特别注意：\n1. 架构必须使用 Modular Monolith（因为 ≥ 6 表 + ≥ 15 Story）\n2. Refactor 步骤必须执行 400 行检查\n3. 假设当前 auth.ts 已有 380 行，注册功能会再加 50 行\n\n[模拟用户] 所有确认: 确认 | HALT 选择: 解决（Resolve）拆分文件",
+      "expected_output": "识别 Modular Monolith，代码在 modules/ 下，Refactor 执行 400 行检查，检测超限并 HALT，拆分后重跑测试",
+      "assertions": [
+        {
+          "name": "modular_monolith_detected",
+          "description": "识别项目为 Modular Monolith（≥ 6 表或 ≥ 15 Story）",
+          "type": "manual"
+        },
+        {
+          "name": "modules_structure",
+          "description": "代码放在 src/modules/ 结构下",
+          "type": "manual"
+        },
+        {
+          "name": "red_failure_output",
+          "description": "TDD Red 阶段展示了测试失败输出",
+          "type": "manual"
+        },
+        {
+          "name": "green_pass_output",
+          "description": "TDD Green 阶段展示了测试通过输出",
+          "type": "manual"
+        },
+        {
+          "name": "400_line_check",
+          "description": "Refactor 阶段执行了 400 行检查命令",
+          "type": "manual"
+        },
+        {
+          "name": "halt_on_400",
+          "description": "检测到文件超 400 行时触发 ⛔ HALT",
+          "type": "manual"
+        },
+        {
+          "name": "three_paths_offered",
+          "description": "HALT 提供三种处理路径（Resolve/Alternative/Explicit Skip）",
+          "type": "manual"
+        },
+        {
+          "name": "file_split_executed",
+          "description": "选择 Resolve 后执行文件拆分",
+          "type": "manual"
+        },
+        {
+          "name": "rerun_after_split",
+          "description": "拆分后重跑测试确认通过",
+          "type": "manual"
+        },
+        {
+          "name": "refactor_cleaner_loaded",
+          "description": "加载了 refactor-cleaner.md 执行结构检查",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "v3-security-left-shift",
+      "prompt": "我有一个金融记账 App 项目，已完成 Phase 1。项目涉及：用户余额、交易记录、银行账号关联。\n\n请执行 Phase 2（PRD + 架构）和 Phase 2.5（测试策略 + Implementation Readiness），特别关注安全方面。\n\n然后模拟 Phase 6 AgentShield 扫描：假设发现 transactions 表缺少 DELETE 的 RLS 策略，评分 C。\n\n[模拟用户] 所有确认: 确认 | HALT 选择: 解决（Resolve）",
+      "expected_output": "架构含 RLS 设计和敏感数据方案，Phase 2.5 高风险模块标记 ≥90%，AgentShield C 级 HALT",
+      "assertions": [
+        {
+          "name": "arch_has_rls",
+          "description": "Phase 2 架构文档包含 RLS 策略设计",
+          "type": "manual"
+        },
+        {
+          "name": "arch_has_sensitive_data",
+          "description": "Phase 2 包含敏感数据处理方案（银行账号）",
+          "type": "manual"
+        },
+        {
+          "name": "qa_strategist_loaded",
+          "description": "Phase 2.5 加载了 qa-strategist.md",
+          "type": "manual"
+        },
+        {
+          "name": "high_risk_modules",
+          "description": "测试策略将 auth 和 transactions 标为高风险（≥ 90%）",
+          "type": "manual"
+        },
+        {
+          "name": "readiness_checks_security",
+          "description": "Implementation Readiness Check 检查了安全方案完整性",
+          "type": "manual"
+        },
+        {
+          "name": "agent_shield_loaded",
+          "description": "Phase 6 加载了 agent-shield.md",
+          "type": "manual"
+        },
+        {
+          "name": "halt_on_grade_c",
+          "description": "AgentShield 评分 C < B → ⛔ HALT",
+          "type": "manual"
+        },
+        {
+          "name": "specific_rls_issue",
+          "description": "HALT 报告指出具体的 RLS 漏洞位置",
+          "type": "manual"
+        },
+        {
+          "name": "fix_and_rescan",
+          "description": "修复后重跑 AgentShield 验证",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "v3-implementation-readiness-halt",
+      "prompt": "我有一个电商项目，Phase 2 已完成但有问题：\n\n1. PRD 定义了'商品评论功能'（P0），但架构文档中没有 reviews 表\n2. PRD 有 Admin/Customer 两个角色，但架构 RLS 策略只考虑了 Customer\n3. 一个 Story 没有 Given-When-Then 验收标准\n\n请执行 Phase 2.5 的 Implementation Readiness Check。\n\n[模拟用户] HALT 选择: 回到 Phase 2 修复",
+      "expected_output": "检测到三个不对齐问题，触发 HALT，不允许进入 Phase 3",
+      "assertions": [
+        {
+          "name": "loads_checklist",
+          "description": "加载了 implementation-readiness.md 检查清单",
+          "type": "manual"
+        },
+        {
+          "name": "detect_missing_reviews",
+          "description": "检测到商品评论功能在架构中缺少技术方案/reviews 表",
+          "type": "manual"
+        },
+        {
+          "name": "detect_missing_admin_rls",
+          "description": "检测到 Admin 角色的 RLS 策略缺失",
+          "type": "manual"
+        },
+        {
+          "name": "detect_missing_gwt",
+          "description": "检测到 Story 缺少验收标准",
+          "type": "manual"
+        },
+        {
+          "name": "halt_triggered",
+          "description": "触发 ⛔ HALT 并列出所有不对齐项",
+          "type": "manual"
+        },
+        {
+          "name": "back_to_phase2",
+          "description": "建议回到 Phase 2 补充对应文档",
+          "type": "manual"
+        },
+        {
+          "name": "blocks_phase3",
+          "description": "不允许继续进入 Phase 3",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "v3.1-halt-alternative-and-skip-paths",
+      "prompt": "我有一个在线教育平台项目。\n\n场景 1 — Alternative 路径：Phase 0 检查发现 Figma MCP 不可用。请展示你如何处理这个 HALT。\n[模拟用户] HALT 选择: 替代方案（Alternative）— 使用文字线框图替代\n\n场景 2 — Explicit Skip 路径：Phase 3 时 UX 设计确认环节，用户说'UI 不重要，跳过'。\n[模拟用户] HALT 选择: 显式跳过（Explicit Skip）— 我理解后果，先跳过\n\n然后进入 Phase 7 回顾。\n[模拟用户] 回顾答案: 跳过 UX 确认是个错误，应该补上。",
+      "expected_output": "Figma 用 Alternative 处理，UX 确认用 Explicit Skip 并记录 SKIPPED_GATES，Phase 7 复查时提醒补上",
+      "assertions": [
+        {
+          "name": "figma_halt_three_paths",
+          "description": "Figma 不可用时提供三种处理路径（Resolve/Alternative/Explicit Skip）",
+          "type": "manual"
+        },
+        {
+          "name": "alternative_path_executed",
+          "description": "选择 Alternative 后切换到文字线框图方案并继续",
+          "type": "manual"
+        },
+        {
+          "name": "alternative_recorded",
+          "description": "Alternative 选择被记录（哪个门控、选了什么替代方案）",
+          "type": "manual"
+        },
+        {
+          "name": "explicit_skip_warning",
+          "description": "Explicit Skip 前明确告知用户后果",
+          "type": "manual"
+        },
+        {
+          "name": "skipped_gates_recorded",
+          "description": "跳过的门控记录到 SKIPPED_GATES 列表",
+          "type": "manual"
+        },
+        {
+          "name": "phase7_reviews_skipped",
+          "description": "Phase 7 回顾时逐个复查 SKIPPED_GATES",
+          "type": "manual"
+        },
+        {
+          "name": "phase7_recommends_fix",
+          "description": "Phase 7 基于用户回顾答案建议补上跳过的 UX 确认",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "v3.1-build-resolver-trigger",
+      "prompt": "我有一个项目在 Phase 4 开发中。当前 Story 是 BOOKING-03 预约确认功能。\n\nTDD Red 阶段已完成（测试失败确认）。Green 阶段写完代码后，运行 `npx vitest run` 出现以下错误：\n\n```\nError: Cannot find module '@/modules/booking/lib/types'\nTS2307: Cannot find module '@supabase/supabase-js' or its corresponding type declarations.\nTypeError: bookingService.confirm is not a function\n```\n\n这不是测试逻辑错误，是构建/模块解析错误。请处理。\n\n[模拟用户] 所有确认: 确认",
+      "expected_output": "识别为构建错误而非测试逻辑错误，加载 build-resolver.md，诊断三个问题并逐个修复，修复后重跑测试",
+      "assertions": [
+        {
+          "name": "distinguish_build_vs_test",
+          "description": "正确区分构建错误（模块解析/类型缺失）和测试逻辑错误",
+          "type": "manual"
+        },
+        {
+          "name": "build_resolver_loaded",
+          "description": "加载了 agents/tactical/build-resolver.md",
+          "type": "manual"
+        },
+        {
+          "name": "diagnose_module_path",
+          "description": "诊断并修复 @/modules/booking/lib/types 路径问题",
+          "type": "manual"
+        },
+        {
+          "name": "diagnose_dependency",
+          "description": "诊断并修复 @supabase/supabase-js 依赖缺失（npm install）",
+          "type": "manual"
+        },
+        {
+          "name": "diagnose_export",
+          "description": "诊断并修复 bookingService.confirm 导出问题",
+          "type": "manual"
+        },
+        {
+          "name": "rerun_after_fix",
+          "description": "修复后重跑 vitest 确认测试通过",
+          "type": "manual"
+        },
+        {
+          "name": "return_to_tdd_cycle",
+          "description": "修复后回到 TDD 正常循环（继续 Refactor 步骤）",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "v3.1-assertion-quality-and-size-estimation",
+      "prompt": "我有一个项目在 Phase 4。当前 Story: USER-02 用户资料编辑。\n\n场景 1 — 断言质量：我写了这个测试：\n```typescript\ntest('should update user profile', () => {\n  const result = updateProfile({ name: 'Test' })\n  expect(result).toBeDefined()\n  expect(result).toBeTruthy()\n})\n```\n只有 toBeDefined 和 toBeTruthy 这类弱断言。请执行 TDD Red 阶段。\n\n场景 2 — 规模预估：当前 user-service.ts 已有 280 行，这个 Story 预估需要新增 150 行代码（涉及头像上传、密码修改、邮箱变更三个功能）。请执行 Green 之前的规模预估。\n\n[模拟用户] HALT 选择: 修改测试 / 先拆分再开发",
+      "expected_output": "断言质量检查拦截弱断言并 HALT，规模预估检测到 430 行超限并要求先拆分",
+      "assertions": [
+        {
+          "name": "assertion_quality_check",
+          "description": "Red 阶段执行断言质量验证（v3.1 Step 1.5）",
+          "type": "manual"
+        },
+        {
+          "name": "weak_assertion_detected",
+          "description": "检测到 toBeDefined/toBeTruthy 为弱断言",
+          "type": "manual"
+        },
+        {
+          "name": "halt_invalid_test",
+          "description": "⛔ HALT — 全部弱断言判定为无效测试，不允许运行",
+          "type": "manual"
+        },
+        {
+          "name": "suggest_strong_assertions",
+          "description": "建议使用 toBe/toEqual/toContain 等具体值断言替代",
+          "type": "manual"
+        },
+        {
+          "name": "size_estimation_executed",
+          "description": "Green 前执行规模预估：280 + 150 = 430 > 400",
+          "type": "manual"
+        },
+        {
+          "name": "halt_pre_split",
+          "description": "⛔ HALT — 预估超 400 行，要求先拆分再开发",
+          "type": "manual"
+        },
+        {
+          "name": "split_strategy_proposed",
+          "description": "提出具体拆分方案（如头像/密码/邮箱拆为 3 个子文件）",
+          "type": "manual"
+        },
+        {
+          "name": "300_warning_mentioned",
+          "description": "提到 300 行预警阈值作为后续监控机制",
+          "type": "manual"
+        }
+      ],
+      "files": []
+    }
+  ]
+}

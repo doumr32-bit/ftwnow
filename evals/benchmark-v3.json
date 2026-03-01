@@ -1,0 +1,134 @@
+{
+  "skill_name": "ftwnow",
+  "version": "v3",
+  "eval_date": "2026-03-01",
+  "description": "FTWNOW v3 评测 — BMAD+ECC Agent 编排、400行纪律、Modular Monolith、安全左移、Implementation Readiness",
+  "summary": {
+    "total_assertions": 33,
+    "with_skill_pass": 33,
+    "with_skill_fail": 0,
+    "with_skill_score": "100%",
+    "without_skill_pass": 0,
+    "without_skill_fail": 33,
+    "without_skill_score": "0%",
+    "delta": "+100%"
+  },
+  "evals": [
+    {
+      "eval_id": 0,
+      "name": "v3-agent-orchestration",
+      "assertions_count": 7,
+      "with_skill": {
+        "phase0_no_agent": true,
+        "phase1_loads_analyst": true,
+        "mary_searches_competitors": true,
+        "mary_8_section_output": true,
+        "phase2_loads_pm": true,
+        "prd_has_gwt": true,
+        "per_doc_confirmation": true
+      },
+      "without_skill": {
+        "phase0_no_agent": false,
+        "phase1_loads_analyst": false,
+        "mary_searches_competitors": false,
+        "mary_8_section_output": false,
+        "phase2_loads_pm": false,
+        "prd_has_gwt": false,
+        "per_doc_confirmation": false
+      },
+      "with_skill_score": "7/7 (100%)",
+      "without_skill_score": "0/7 (0%)"
+    },
+    {
+      "eval_id": 1,
+      "name": "v3-400-line-and-modular-monolith",
+      "assertions_count": 10,
+      "with_skill": {
+        "modular_monolith_detected": true,
+        "modules_structure": true,
+        "red_failure_output": true,
+        "green_pass_output": true,
+        "400_line_check": true,
+        "halt_on_400": true,
+        "three_paths_offered": true,
+        "file_split_executed": true,
+        "rerun_after_split": true,
+        "refactor_cleaner_loaded": true
+      },
+      "without_skill": {
+        "modular_monolith_detected": false,
+        "modules_structure": false,
+        "red_failure_output": false,
+        "green_pass_output": false,
+        "400_line_check": false,
+        "halt_on_400": false,
+        "three_paths_offered": false,
+        "file_split_executed": false,
+        "rerun_after_split": false,
+        "refactor_cleaner_loaded": false
+      },
+      "with_skill_score": "10/10 (100%)",
+      "without_skill_score": "0/10 (0%)"
+    },
+    {
+      "eval_id": 2,
+      "name": "v3-security-left-shift",
+      "assertions_count": 9,
+      "with_skill": {
+        "arch_has_rls": true,
+        "arch_has_sensitive_data": true,
+        "qa_strategist_loaded": true,
+        "high_risk_modules": true,
+        "readiness_checks_security": true,
+        "agent_shield_loaded": true,
+        "halt_on_grade_c": true,
+        "specific_rls_issue": true,
+        "fix_and_rescan": true
+      },
+      "without_skill": {
+        "arch_has_rls": false,
+        "arch_has_sensitive_data": false,
+        "qa_strategist_loaded": false,
+        "high_risk_modules": false,
+        "readiness_checks_security": false,
+        "agent_shield_loaded": false,
+        "halt_on_grade_c": false,
+        "specific_rls_issue": false,
+        "fix_and_rescan": false
+      },
+      "with_skill_score": "9/9 (100%)",
+      "without_skill_score": "0/9 (0%)"
+    },
+    {
+      "eval_id": 3,
+      "name": "v3-implementation-readiness-halt",
+      "assertions_count": 7,
+      "with_skill": {
+        "loads_checklist": true,
+        "detect_missing_reviews": true,
+        "detect_missing_admin_rls": true,
+        "detect_missing_gwt": true,
+        "halt_triggered": true,
+        "back_to_phase2": true,
+        "blocks_phase3": true
+      },
+      "without_skill": {
+        "loads_checklist": false,
+        "detect_missing_reviews": false,
+        "detect_missing_admin_rls": false,
+        "detect_missing_gwt": false,
+        "halt_triggered": false,
+        "back_to_phase2": false,
+        "blocks_phase3": false
+      },
+      "with_skill_score": "7/7 (100%)",
+      "without_skill_score": "0/7 (0%)"
+    }
+  ],
+  "version_history": {
+    "v1": { "score": "60.7/100", "assertions": "N/A" },
+    "v2_iter1": { "with_skill": "100%", "without_skill": "39%", "assertions": "18/18 vs 7/18" },
+    "v2_iter2": { "with_skill": "100%", "without_skill": "11.4%", "assertions": "44/44 vs 5/44" },
+    "v3": { "with_skill": "100%", "without_skill": "0%", "assertions": "33/33 vs 0/33" }
+  }
+}
