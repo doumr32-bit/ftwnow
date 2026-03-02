@@ -1,0 +1,12 @@
+{
+  "name": "ftwnow-marketplace",
+  "description": "FTWNOW — Zero-to-production full-stack development methodology plugin marketplace",
+  "plugins": [
+    {
+      "name": "ftwnow",
+      "description": "Zero-to-production full-stack development methodology. 9 Phases, 16 Agents, 3 Hard Gates. TypeScript + Next.js + Supabase + Vercel.",
+      "version": "3.2.0",
+      "source": "."
+    }
+  ]
+}
