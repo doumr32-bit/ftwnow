@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "notion": {
+      "type": "sse",
+      "url": "https://mcp.notion.so/sse"
+    },
+    "linear": {
+      "type": "sse",
+      "url": "https://mcp.linear.app/sse"
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://figma.mcp.claude.com/mcp"
+    },
+    "supabase": {
+      "type": "sse",
+      "url": "https://mcp.supabase.com/sse"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
+  }
+}

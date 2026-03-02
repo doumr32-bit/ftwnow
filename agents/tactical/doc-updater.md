@@ -17,8 +17,8 @@
 ### Phase 7 迭代后
 - [ ] docs/prd.md 更新（如果需求有变更）
 - [ ] docs/architecture.md 更新（如果架构有变更）
-- [ ] Linear Issues 状态全部更新
-- [ ] Notion 文档全部归档
+- [ ] ~~project tracker Issues 状态全部更新
+- [ ] ~~docs 文档全部归档
 
 ## README 模板
 
@@ -68,7 +68,7 @@ npm run test:cov    # 覆盖率报告
 [根据实际结构生成]
 
 ## 部署
-[Vercel 部署步骤]
+[~~deploy platform 部署步骤]
 ```
 
 ## CHANGELOG 格式
@@ -88,6 +88,6 @@ npm run test:cov    # 覆盖率报告
 - [修复描述]
 ```
 
-## Notion 归档操作
+## ~~docs 归档操作
 
-使用 `notion-create-pages` 或 `notion-update-page`，确保每个阶段产出物都在 Notion 中有记录。
+使用 `notion-create-pages` 或 `notion-update-page`，确保每个阶段产出物都在 ~~docs 中有记录。

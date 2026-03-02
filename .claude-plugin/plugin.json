@@ -1,0 +1,21 @@
+{
+  "name": "ftwnow",
+  "version": "3.2.0",
+  "description": "Zero-to-production full-stack development methodology. Combines BMAD (Spec-Driven Development) with TDD to guide anyone from idea to deployed product using TypeScript + Next.js + Supabase + Vercel.",
+  "author": {
+    "name": "Dou"
+  },
+  "repository": "https://github.com/doumr32-bit/ftwnow",
+  "license": "MIT",
+  "keywords": [
+    "ftwnow",
+    "full-stack",
+    "tdd",
+    "bmad",
+    "spec-driven",
+    "next.js",
+    "supabase",
+    "vercel",
+    "zero-to-production"
+  ]
+}

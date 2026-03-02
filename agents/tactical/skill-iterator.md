@@ -180,7 +180,7 @@ Skill Iterator 自身的修改建议**必须通过 eval 验证**：
 迭代建议报告保存到两个位置：
 
 1. `logs/skill-iterations/iter-{NNN}.md` — GitHub 长期存储
-2. Notion 归档 — 按 CLAUDE.MD 规则
+2. ~~docs 归档 — 按 CLAUDE.MD 规则
 
 ## 与其他 Agent 的关系
 

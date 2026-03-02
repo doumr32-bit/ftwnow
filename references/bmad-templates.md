@@ -69,7 +69,7 @@
 | 样式 | Tailwind CSS | 工具类 CSS |
 | UI 组件 | shadcn/ui | 可定制组件库 |
 | 数据库 | Supabase (PostgreSQL) | 托管数据库 + 认证 |
-| 部署 | Vercel | 自动部署 |
+| 部署 | ~~deploy platform | 自动部署 |
 | 测试 | Vitest + Playwright | 单元测试 + E2E |
 
 ## 2. 项目结构

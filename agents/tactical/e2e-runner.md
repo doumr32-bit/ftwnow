@@ -114,7 +114,7 @@ test.describe('[资源] CRUD', () => {
 3. 添加 `test.retry(2)` 作为临时措施
 4. 记录为技术债务
 
-## Bug → Linear 流程
+## Bug → ~~project tracker 流程
 
 发现问题后：
 ```

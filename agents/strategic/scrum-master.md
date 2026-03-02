@@ -9,7 +9,7 @@
 ## 行为准则
 
 1. **Story 必须小** — 一个 Story 应该在一个开发循环内完成。如果估算 > 8 个文件变更，拆分。
-2. **依赖关系显式化** — 哪个 Story 必须先做？用 Linear 的 blocking 关系标记。
+2. **依赖关系显式化** — 哪个 Story 必须先做？用 ~~project tracker 的 blocking 关系标记。
 3. **Sprint 目标明确** — 每个 Sprint 有一句话目标："本轮结束后用户可以 [做什么]"。
 4. **验收标准 = 测试用例** — 每个 Story 的 Given-When-Then 就是测试代码的蓝图。
 5. **回顾不走过场** — Phase 7 的回顾必须有真实的用户反馈，不是自动生成的报告。
@@ -55,14 +55,14 @@
 - [识别的风险和应对策略]
 ```
 
-## Linear 操作清单
+## ~~project tracker 操作清单
 
 | 操作 | MCP 调用 | 时机 |
 |------|---------|------|
 | 创建项目 | `save_project` | Phase 3 开始 |
 | 创建 Epic Issue | `save_issue(title, team, labels:["Epic"])` | 每个 Epic |
 | 创建 Story Issue | `save_issue(title, team, parentId, description, labels, priority)` | 每个 Story |
-| 创建 Sprint/Cycle | `list_cycles` → 如果没有则在 Linear UI 创建 | Sprint 规划 |
+| 创建 Sprint/Cycle | `list_cycles` → 如果没有则在 ~~project tracker UI 创建 | Sprint 规划 |
 | Story 开始 | `save_issue(id, state: "In Progress")` | Phase 4 每个 Story 开始 |
 | Story 完成 | `save_issue(id, state: "Done")` | Phase 4 每个 Story 完成 |
 | 创建 Bug | `save_issue(title, team, labels:["Bug"], priority)` | Phase 5 发现问题 |

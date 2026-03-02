@@ -25,7 +25,7 @@
 - [ ] 测试数据已清除
 
 ### 4. 配置
-- [ ] Vercel 环境变量已设置
+- [ ] ~~deploy platform 环境变量已设置
 - [ ] Supabase Auth URL 已配置（Site URL + Redirect URLs）
 - [ ] CORS 配置正确
 - [ ] `.env.example` 已更新

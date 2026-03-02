@@ -1,7 +1,7 @@
 ---
 name: ftwnow
 description: |
-  零基础全栈项目开发方法论 — 从想法到上线的完整流程引擎。融合 BMAD 框架（Spec-Driven Development）与 TDD 开发模式，引导零代码基础的创业者和产品经理用 Claude Code 把产品做出来并部署上线。技术栈为 TypeScript + Next.js + Supabase + Vercel。强制使用 Notion、Linear、Figma、GitHub、Supabase、Vercel 等 MCP 工具进行全流程管理。
+  零基础全栈项目开发方法论 — 从想法到上线的完整流程引擎。融合 BMAD 框架（Spec-Driven Development）与 TDD 开发模式，引导零代码基础的创业者和产品经理用 Claude Code 把产品做出来并部署上线。技术栈为 TypeScript + Next.js + Supabase + Vercel。通过 MCP 工具进行全流程管理（~~docs、~~project tracker、~~design tool、GitHub、Supabase、~~deploy platform）。
 
   当用户提到以下任何场景时，务必使用此技能：想做一个产品/App/网站、从零开始开发、需要项目开发流程指导、提到 BMAD 或 SDD+TDD、想把想法变成产品、vibe coding、不会写代码但想做产品、需要全栈开发流程、项目规划到部署的完整流程、FTWNOW。即使用户只是模糊地说"我有个想法"或"帮我做个东西"，也应该触发此技能。
 ---
@@ -42,7 +42,7 @@ description: |
 | Winston (Architect) | `agents/strategic/architect.md` | 架构设计、Modular Monolith、Implementation Readiness | Phase 2, 2.5 |
 | Bob (Scrum Master) | `agents/strategic/scrum-master.md` | Sprint 编排、Story 拆解、回顾引导 | Phase 3, 7 |
 | Quinn (QA Strategist) | `agents/strategic/qa-strategist.md` | 测试策略、覆盖率分级、需求追溯 | Phase 2.5 |
-| Sally (UX Designer) | `agents/strategic/ux-designer.md` | 页面布局、交互设计、Figma 对接 | Phase 3 (可选) |
+| Sally (UX Designer) | `agents/strategic/ux-designer.md` | 页面布局、交互设计、~~design tool 对接 | Phase 3 (可选) |
 
 ### 战术层 Agent（ECC — 执行和质量）
 
@@ -124,23 +124,23 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 
 | # | 工具 | 验证操作 | 失败处理 |
 |---|------|---------|---------|
-| 1 | Notion | `notion-search` 搜索关键词 | ⛔ HALT — 文档中枢 |
-| 2 | Linear | `list_teams` 列出团队 | ⛔ HALT — 任务管理核心 |
+| 1 | ~~docs | 搜索关键词测试 | ⛔ HALT — 文档中枢 |
+| 2 | ~~project tracker | 列出项目/团队 | ⛔ HALT — 任务管理核心 |
 | 3 | Supabase | `list_projects` 列出项目 | ⛔ HALT — 后端基础 |
 | 4 | GitHub | `gh auth status` | ⛔ HALT — 提供方案 A/B/C |
-| 5 | Figma | `get_screenshot` 测试 | ⚠️ 非阻断 — 记录替代方案 |
-| 6 | Vercel | `vercel --version` | ⚠️ 非阻断 — 记录替代方案 |
+| 5 | ~~design tool | 连接测试 | ⚠️ 非阻断 — 记录替代方案 |
+| 6 | ~~deploy platform | 连接测试 | ⚠️ 非阻断 — 记录替代方案 |
 
 ### 完成条件
 
 ```
 🔧 工具链就绪报告
-✅ Notion — 已连接
-✅ Linear — 已连接，团队: [名]
+✅ ~~docs — 已连接
+✅ ~~project tracker — 已连接，团队: [名]
 ✅ Supabase — 已连接，[N]个项目
 ✅ GitHub — 已认证，用户: [username]
-⚠️ Figma — [状态]
-⚠️ Vercel — [状态]
+⚠️ ~~design tool — [状态]
+⚠️ ~~deploy platform — [状态]
 ```
 
 ---
@@ -163,7 +163,7 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 |--------|---------|
 | 需求摘要 8 节全部填写 | ⛔ HALT — 补全 |
 | 用户逐节确认 | ⛔ HALT — 等待 |
-| Notion 归档 | ⛔ HALT — 重试 |
+| ~~docs 归档 | ⛔ HALT — 重试 |
 
 ---
 
@@ -176,13 +176,13 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 ### 流程
 
 1. 加载 `pm.md`，生成 PRD（含验收标准 Given-When-Then）
-2. 展示 PRD → **⛔ 等用户确认** → Notion 归档
+2. 展示 PRD → **⛔ 等用户确认** → ~~docs 归档
 3. 加载 `architect.md`，**先执行 PRD 功能映射矩阵**（v3.1）— 逐条确认 P0/P1 功能有技术方案，缺失即 ⛔ HALT
 4. 生成技术架构文档（基于映射矩阵，确保无遗漏）
 5. **Modular Monolith 判断**: 统计 Story 数和表数 → ≥ 15 Story 或 ≥ 6 表 → 加载 `references/modular-monolith.md`，使用 Modular Monolith 架构
-6. 展示架构 → **⛔ 等用户确认** → Notion 归档
+6. 展示架构 → **⛔ 等用户确认** → ~~docs 归档
 6. 拆解 Epic → Story（每个 Story 含 Given-When-Then）
-7. 展示拆解 → **⛔ 等用户确认** → Notion 归档
+7. 展示拆解 → **⛔ 等用户确认** → ~~docs 归档
 8. 保存到 `docs/` 目录
 
 ### ⛔ Phase 2 门控
@@ -192,7 +192,7 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 | PRD 用户确认 | ⛔ HALT — 禁止批量确认 |
 | 架构文档用户确认 | ⛔ HALT |
 | Epic/Story 用户确认 | ⛔ HALT |
-| 3 份文档 Notion 归档 | ⛔ HALT |
+| 3 份文档 ~~docs 归档 | ⛔ HALT |
 | 保存到 docs/ | ⛔ HALT |
 
 ---
@@ -212,7 +212,7 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 - Mock 策略
 - 需求追溯矩阵
 
-展示 → 用户确认 → Notion 归档
+展示 → 用户确认 → ~~docs 归档
 
 ### 2.5.2 Implementation Readiness Check（Winston）
 
@@ -228,7 +228,7 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 |--------|---------|
 | 测试策略用户确认 | ⛔ HALT |
 | Implementation Readiness 全部通过 | ⛔ HALT — 回到 Phase 2 补充 |
-| Notion 归档 | ⛔ HALT |
+| ~~docs 归档 | ⛔ HALT |
 
 ---
 
@@ -238,11 +238,11 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 
 ### 3.1 UX 原型
 
-加载 `ux-designer.md`（如 Figma 可用或项目有复杂 UI）：
-- Figma 可用 → 建议 v0.dev 生成 → Figma 对接
-- Figma 不可用 → 文字线框图
+加载 `ux-designer.md`（如 ~~design tool 可用或项目有复杂 UI）：
+- ~~design tool 可用 → 建议 v0.dev 生成 → ~~design tool 对接
+- ~~design tool 不可用 → 文字线框图
 
-### 3.2 Linear 项目
+### 3.2 ~~project tracker 项目
 
 加载 `scrum-master.md`，按 Bob 的 Sprint 规划方式：
 1. 创建项目 (`save_project`)
@@ -264,11 +264,11 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 
 | 检查项 | 失败处理 |
 |--------|---------|
-| 设计确认（Figma 或文字） | ⛔ HALT |
-| Linear 项目 + Issues 创建 | ⛔ HALT |
+| 设计确认（~~design tool 或文字） | ⛔ HALT |
+| ~~project tracker 项目 + Issues 创建 | ⛔ HALT |
 | GitHub 仓库 + develop 分支 | ⛔ HALT — 方案 A/B/C |
 | `npm run dev` 正常启动 | ⛔ HALT |
-| Notion 归档 | ⛔ HALT |
+| ~~docs 归档 | ⛔ HALT |
 
 ---
 
@@ -290,7 +290,7 @@ HALT 是强制停止机制。触发时必须停下来，不能继续。
 ### 每个 Story 的开发循环
 
 ```
-Step 1: Linear 状态更新 → "In Progress"
+Step 1: ~~project tracker 状态更新 → "In Progress"
 Step 2: 创建 feature branch → git checkout -b feature/[story-name]
 Step 3: 🔴 Red — 写测试 → 断言质量验证(v3.1) → 运行 → 确认失败（⛔ 必须看到 ❌ FAIL）
 Step 3.5: 📏 规模预估(v3.1) — 预估实现代码行数，>300行预警，>400行先拆分
@@ -304,8 +304,8 @@ Step 7: 创建 PR + Code Review
         加载 code-reviewer.md 执行审查
         涉及 auth/权限/支付 → 额外加载 security-reviewer.md
         ⛔ HALT — 如果有 Critical 问题
-Step 8: 合并 PR + Linear 状态 → "Done"
-Step 9: 每完成一个 Epic → Notion 进度同步
+Step 8: 合并 PR + ~~project tracker 状态 → "Done"
+Step 9: 每完成一个 Epic → ~~docs 进度同步
 ```
 
 ### Build 失败自动修复
@@ -320,9 +320,9 @@ Step 9: 每完成一个 Epic → Notion 进度同步
 | 所有 Sprint Story 测试通过 | ⛔ HALT — 修复 |
 | **无文件超 400 行** | ⛔ HALT — 必须重构 |
 | 所有 PR 已合并 | ⛔ HALT |
-| Linear 所有 Sprint Issue Done | ⛔ HALT |
+| ~~project tracker 所有 Sprint Issue Done | ⛔ HALT |
 | 覆盖率达标（按 qa-strategist 的分级） | ⛔ HALT — 补测试 |
-| Notion 归档 | ⛔ HALT |
+| ~~docs 归档 | ⛔ HALT |
 
 ---
 
@@ -358,7 +358,7 @@ Step 9: 每完成一个 Epic → Notion 进度同步
 | 所有 Bug Issue Done | ⛔ HALT |
 | DB 审计无 Critical | ⛔ HALT |
 | Supabase advisors 无 Critical | ⛔ HALT |
-| Notion 归档 | ⛔ HALT |
+| ~~docs 归档 | ⛔ HALT |
 
 ---
 
@@ -382,9 +382,9 @@ Step 9: 每完成一个 Epic → Notion 进度同步
 2. `get_project_url` + `get_publishable_keys`
 3. Auth URL 配置
 
-### 6.4 Vercel 部署
+### 6.4 ~~deploy platform 部署
 
-Vercel CLI 可用 → `vercel --prod`
+~~deploy platform CLI 可用 → deploy to ~~deploy platform
 不可用 → 提供三种方案（安装 CLI / Web 部署 / 延迟部署）
 
 ### 6.5 文档同步
@@ -410,7 +410,7 @@ Vercel CLI 可用 → `vercel --prod`
 | AgentShield ≥ B | ⛔ HALT |
 | 部署成功或有明确计划 | ⛔ HALT |
 | 部署验证通过 | ⛔ HALT |
-| Notion 归档 | ⛔ HALT |
+| ~~docs 归档 | ⛔ HALT |
 
 ---
 
@@ -428,11 +428,11 @@ Vercel CLI 可用 → `vercel --prod`
 
 ### 7.3 新 Sprint 规划
 
-基于回顾结果在 Linear 创建新一轮 Story。
+基于回顾结果在 ~~project tracker 创建新一轮 Story。
 
 ### 7.4 文档归档
 
-加载 `doc-updater.md`，Notion 归档迭代回顾报告。
+加载 `doc-updater.md`，~~docs 归档迭代回顾报告。
 
 ### 7.5 日志归档（v3.2 新增）
 
@@ -446,7 +446,7 @@ Sprint 结束时自动执行：
 用户说"分析日志"或"运行 Skill Iterator"时触发：
 1. 加载 `skill-iterator.md`
 2. 执行三步工作流：Self-Knowledge → Data Analysis → Recommendations
-3. 输出归档到 `logs/skill-iterations/iter-{NNN}.md` + Notion
+3. 输出归档到 `logs/skill-iterations/iter-{NNN}.md` + ~~docs
 
 ### ⛔ Phase 7 门控
 
@@ -454,8 +454,8 @@ Sprint 结束时自动执行：
 |--------|---------|
 | 4 个回顾问题完成 | ⛔ HALT — 不跳过 |
 | SKIPPED_GATES 已复查 | ⛔ HALT |
-| Linear 新 Sprint 创建 | ⛔ HALT |
-| Notion 回顾报告归档 | ⛔ HALT |
+| ~~project tracker 新 Sprint 创建 | ⛔ HALT |
+| ~~docs 回顾报告归档 | ⛔ HALT |
 | 日志文件完整并推送 GitHub | ⛔ HALT — 日志是迭代的数据基础 |
 
 ---
@@ -464,12 +464,12 @@ Sprint 结束时自动执行：
 
 | 工具 | 用途 | 使用阶段 | 必需? |
 |------|------|---------|-------|
-| Notion | 文档中枢 | 全流程 | ✅ |
-| Linear | 任务管理 | Phase 2-7 | ✅ |
-| Figma | 原型设计 | Phase 3 | ⚠️ 推荐 |
+| ~~docs | 文档中枢 | 全流程 | ✅ |
+| ~~project tracker | 任务管理 | Phase 2-7 | ✅ |
+| ~~design tool | 原型设计 | Phase 3 | ⚠️ 推荐 |
 | GitHub | 代码管理 | Phase 3-7 | ✅ |
 | Supabase | 后端 | Phase 4-6 | ✅ |
-| Vercel | 部署 | Phase 6 | ⚠️ 推荐 |
+| ~~deploy platform | 部署 | Phase 6 | ⚠️ 推荐 |
 | Playwright | E2E 测试 | Phase 5 | ✅ |
 
 ---
@@ -499,7 +499,7 @@ Phase 7: 迭代循环 ← Bob (Scrum Master) Party Mode + 日志归档
 
 ---
 
-## Notion 全流程文档管理
+## ~~docs 全流程文档管理
 
 | 阶段 | 归档内容 | 归档时机 |
 |------|---------|---------|

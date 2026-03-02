@@ -1,4 +1,4 @@
-# 部署指南 — Vercel + Supabase
+# 部署指南 — ~~deploy platform + Supabase
 
 ## Supabase 设置流程
 
@@ -68,7 +68,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbG...  # 仅服务端使用
 
 ---
 
-## Vercel 部署流程
+## ~~deploy platform 部署流程
 
 ### 1. 准备工作
 
@@ -87,7 +87,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbG...  # 仅服务端使用
 4. 配置环境变量（从 .env.local 复制）
 5. 点击 Deploy
 
-或者使用 Vercel CLI：
+或者使用 ~~deploy platform CLI：
 ```bash
 npm i -g vercel
 vercel login
@@ -111,7 +111,7 @@ vercel --prod
 ### 4. 自定义域名
 
 如果用户有自己的域名：
-1. 在 Vercel 项目设置中添加域名
+1. 在 ~~deploy platform 项目设置中添加域名
 2. 按指引配置 DNS 记录
 3. 等待 SSL 证书自动签发
 4. 验证域名生效
@@ -123,7 +123,7 @@ vercel --prod
 | 问题 | 常见原因 | 解决方案 |
 |------|---------|---------|
 | Build 失败 | TypeScript 类型错误 | 检查 build 日志，修复类型错误 |
-| 环境变量缺失 | 未在 Vercel 配置 | 在 Project Settings → Environment Variables 添加 |
+| 环境变量缺失 | 未在 ~~deploy platform 配置 | 在 Project Settings → Environment Variables 添加 |
 | 数据库连接失败 | Supabase URL 错误 | 确认环境变量值正确 |
 | 页面 404 | 路由配置问题 | 检查 app/ 目录结构 |
 | API 超时 | Serverless 函数超时 | 优化数据库查询或增加超时时间 |

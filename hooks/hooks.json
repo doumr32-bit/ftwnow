@@ -1,0 +1,14 @@
+{
+  "SessionStart": [
+    {
+      "matcher": "",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo '## FTWNOW Plugin Active\n\nFTWNOW full-stack development methodology is loaded.\n\n- Use `/FTW <project-name>` to activate a project\n- Use `/FTW <project-name> \"task description\"` to start a new task\n- All development follows Phase 0-7 with 16 Agents and 3 Hard Gates\n- Say \"FTW\" to unlock execution after PLAN mode'",
+          "timeout": 5
+        }
+      ]
+    }
+  ]
+}

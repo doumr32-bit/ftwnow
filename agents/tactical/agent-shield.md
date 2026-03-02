@@ -43,7 +43,7 @@ npm audit --production
 - CSP (Content Security Policy) 设置
 
 ### 5. 部署环境检查
-- Vercel 环境变量是否正确设置
+- ~~deploy platform 环境变量是否正确设置
 - Supabase 生产项目配置
 - Auth 重定向 URL 是否正确（不指向 localhost）
 
