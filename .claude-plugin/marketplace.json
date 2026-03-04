@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "ftwnow",
-      "source": ".",
+      "source": "./",
       "description": "Zero-to-production full-stack development methodology. 9 Phases, 16 Agents, 3 Hard Gates. TypeScript + Next.js + Supabase + Vercel.",
       "version": "3.2.0"
     }
